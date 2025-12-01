@@ -50,7 +50,7 @@ export const playStage = async () => {
     () => {
       findCloseDialog()?.click();
     },
-    { maxAttempts: 10 }
+    { maxAttempts: 10, retryInterval: 500 }
   );
 
   //! 执行随机通关回放文件
@@ -81,7 +81,7 @@ export const exitStage = async () => {
     () => {
       keyPress("VK_ESCAPE");
     },
-    { maxAttempts: 5 }
+    { maxAttempts: 5, retryInterval: 2000 }
   );
   findExitStageBtn()?.click();
   await genshin.returnMainUi();

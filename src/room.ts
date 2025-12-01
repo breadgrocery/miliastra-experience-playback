@@ -43,8 +43,7 @@ export const createRoom = async (room: string) => {
       findAllWonderlandsBtn()?.click();
     }
   );
-  //! 拉取数据速度受网络影响，等待界面稳定
-  await sleep(2000);
+  await sleep(1500);
 
   //! 记录搜索前的第一个奇域名称
   let iwnt: string | undefined;
@@ -83,7 +82,7 @@ export const createRoom = async (room: string) => {
       await sleep(1000);
       fswnt = findFirstSearchResultText();
     },
-    { maxAttempts: 25, retryInterval: 250 }
+    { maxAttempts: 30, retryInterval: 200 }
   );
 
   log.info("打开奇域介绍...");
@@ -100,7 +99,7 @@ export const createRoom = async (room: string) => {
         clickToChooseFirstSearchResult();
       }
     },
-    { maxAttempts: 30 }
+    { maxAttempts: 60 }
   );
 
   log.info("创建并进入房间...");
@@ -110,7 +109,7 @@ export const createRoom = async (room: string) => {
     () => {
       findCreateRoomBtn()?.click();
     },
-    { maxAttempts: 10 }
+    { maxAttempts: 60 }
   );
 };
 
@@ -152,11 +151,12 @@ export const leaveRoom = async () => {
     await assertRegionAppearing(
       findBeyondHallBtn,
       "离开房间超时",
-      () => {
+      async () => {
         findLeaveRoomBtn()?.click();
+        await sleep(1000);
         findConfirmBtn()?.click();
       },
-      { maxAttempts: 10 }
+      { maxAttempts: 5 }
     );
   }
 };

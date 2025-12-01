@@ -33,7 +33,7 @@ export const exitLobbyToTeyvat = async () => {
     () => {
       keyPress("VK_F2");
     },
-    { maxAttempts: 10 }
+    { maxAttempts: 10, retryInterval: 2000 }
   );
 
   log.info("返回提瓦特大陆...");
