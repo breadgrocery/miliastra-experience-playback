@@ -33,7 +33,7 @@ export const goToManageStageSave = async () => {
 
 //! 删除关卡存档
 export const deleteStageSave = async () => {
-  if (!userConfig.deleteStageSave) {
+  if (!userConfig.deleteStageSave || userConfig.deleteStageSaveKeyword.trim() === "") {
     log.info("未启用删除关卡存档，跳过");
     return;
   }

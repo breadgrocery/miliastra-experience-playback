@@ -13,7 +13,8 @@ import {
   findHeaderTitle,
   findLeaveRoomBtn,
   findSearchWonderlandBtn,
-  findSearchWonderlandInput
+  findSearchWonderlandInput,
+  findSearchWonderlandThrottleMsg
 } from "./regions";
 
 export const isInRoom = () => findHeaderTitle("房间", true) !== undefined;
@@ -43,16 +44,7 @@ export const createRoom = async (room: string) => {
     }
   );
   //! 拉取数据速度受网络影响，等待界面稳定
-  await sleep(3000);
-
-  log.info("粘贴奇域关卡文本: {room}", room);
-  await assertRegionAppearing(findClearInputBtn, "粘贴关卡文本超时", () => {
-    const input = findSearchWonderlandInput();
-    if (input) {
-      input.click();
-      inputText(room);
-    }
-  });
+  await sleep(2000);
 
   //! 记录搜索前的第一个奇域名称
   let iwnt: string | undefined;
@@ -66,19 +58,32 @@ export const createRoom = async (room: string) => {
   if (iwnt === undefined) throw new Error("加载全部奇域列表超时");
   log.info("搜索前的第一个奇域名称: {iwnt}", iwnt);
 
+  log.info("粘贴奇域关卡文本: {room}", room);
+  await assertRegionAppearing(findClearInputBtn, "粘贴关卡文本超时", () => {
+    const input = findSearchWonderlandInput();
+    if (input) {
+      input.click();
+      inputText(room);
+    }
+  });
+
   //! 等待搜索结果变化
   let fswnt: string | undefined;
   log.info("搜索奇域关卡: {room}", room);
   await waitForAction(
     () => {
-      return fswnt !== undefined && fswnt !== iwnt;
+      if (fswnt === undefined) return false;
+      //! 检测搜索过于频繁提示
+      if (findSearchWonderlandThrottleMsg()) return true;
+      //! 检测搜索结果是否变化
+      return fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
     },
     async () => {
       findSearchWonderlandBtn()?.click();
       await sleep(1000);
       fswnt = findFirstSearchResultText();
     },
-    { maxAttempts: 50, retryInterval: 200 }
+    { maxAttempts: 25, retryInterval: 250 }
   );
 
   log.info("打开奇域介绍...");

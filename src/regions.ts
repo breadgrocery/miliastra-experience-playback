@@ -64,10 +64,14 @@ export const findClearInputBtn = () => {
 export const findSearchWonderlandBtn = () => {
   return findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
 };
+//! 查找搜索过于频繁提示
+export const findSearchWonderlandThrottleMsg = () => {
+  return findTextWithinBounds("过于频繁", 0, 0, 1920, 300, { contains: true });
+};
 //! 查找第一个奇域搜索结果名称
 export const findFirstSearchResultText = () => {
   const ir = captureGameRegion();
-  const ro = RecognitionObject.ocr(200, 390, 1500, 50);
+  const ro = RecognitionObject.ocr(240, 390, 300, 50);
   return (() => {
     const list = ir.findMulti(ro);
     for (let i = 0; i < list.count; i++) {
@@ -108,7 +112,7 @@ export const clickToPrepare = () => {
   click(770, 275);
 };
 //! 加入准备区提示
-export const findPrepareMessage = () => {
+export const findPrepareMsg = () => {
   return findTextWithinBounds("加入准备", 576, 432, 768, 216, {
     contains: true
   });
@@ -173,7 +177,7 @@ export const findExitStageBtn = () => {
   return findTextWithinBounds("中断挑战", 576, 324, 768, 432);
 };
 //! 查找跳过奇域等级提升页面
-export const findSkipLevelUpMessage = () => {
+export const findSkipLevelUpMsg = () => {
   return findTextWithinBounds("空白处", 610, 950, 700, 60, { contains: true });
 };
 

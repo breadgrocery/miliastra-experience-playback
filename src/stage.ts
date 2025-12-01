@@ -6,8 +6,8 @@ import {
   findBottomBtnText,
   findCloseDialog,
   findExitStageBtn,
-  findPrepareMessage,
-  findSkipLevelUpMessage,
+  findPrepareMsg,
+  findSkipLevelUpMsg,
   findStageEscBtn
 } from "./regions";
 
@@ -25,8 +25,6 @@ export const ensurePlaybackFilesExist = () => {
 };
 
 export const playStage = async () => {
-  const st = Date.now();
-
   //! 等待进入关卡
   await assertRegionAppearing(
     findStageEscBtn,
@@ -36,9 +34,9 @@ export const playStage = async () => {
       findBottomBtnText("准备", true)?.click();
 
       //! 判断是否已经加入准备区
-      if (findPrepareMessage()) {
+      if (findPrepareMsg()) {
         log.info("加入准备区...");
-        await assertRegionDisappearing(findPrepareMessage, "等待加入准备区提示消失超时");
+        await assertRegionDisappearing(findPrepareMsg, "等待加入准备区提示消失超时");
         clickToPrepare();
       }
     },
@@ -59,11 +57,6 @@ export const playStage = async () => {
   await execStagePlayback();
   await sleep(3000);
 
-  //! 判断是否通关超时，尝试退出关卡
-  if (Date.now() - st > userConfig.stageTimeout * 1000) {
-    await exitStage();
-  }
-
   //! 退出关卡返回大厅
   await exitStageToLobby();
 };
@@ -73,23 +66,24 @@ export const execStagePlayback = async () => {
   const { playbacks } = userConfig;
   const playback = playbacks[Math.floor(Math.random() * playbacks.length)];
   const file = `assets/playbacks/${playback}`;
-  log.info(`执行通关回放文件: ${file}`);
+  log.info("执行通关回放文件: {file}", file);
   await keyMouseScript.runFile(file);
 };
 
 //! 退出关卡
 export const exitStage = async () => {
-  await assertRegionDisappearing(findStageEscBtn, "退出关卡超时", async () => {
-    await assertRegionAppearing(
-      findExitStageBtn,
-      "等待中断挑战按钮出现超时",
-      () => {
-        keyPress("VK_ESCAPE");
-      },
-      { maxAttempts: 2 }
-    );
-    findExitStageBtn()?.click();
-  });
+  if (findStageEscBtn() === undefined) return;
+
+  log.warn("关卡超时，尝试退出关卡...");
+  await assertRegionAppearing(
+    findExitStageBtn,
+    "等待中断挑战按钮出现超时",
+    () => {
+      keyPress("VK_ESCAPE");
+    },
+    { maxAttempts: 5 }
+  );
+  findExitStageBtn()?.click();
   await genshin.returnMainUi();
 };
 
@@ -101,16 +95,19 @@ export const exitStageToLobby = async () => {
   }
 
   log.info("退出关卡返回大厅...");
-  const ok = await waitForAction(
+  const done = await waitForAction(
     isInLobby,
-    () => {
+    async () => {
       //! 跳过奇域等级提升页面（奇域等级每逢11、21、31、41级时出现加星页面）
-      findSkipLevelUpMessage()?.click();
+      findSkipLevelUpMsg()?.click();
 
       //! 点击底部 “返回大厅” 按钮
       findBottomBtnText("大厅", true)?.click();
     },
     { maxAttempts: 60 }
   );
-  if (!ok) throw new Error("退出关卡返回大厅超时");
+  if (!done) {
+    await exitStage();
+    throw new Error("退出关卡返回大厅超时");
+  }
 };

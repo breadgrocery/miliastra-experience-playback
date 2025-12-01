@@ -33,12 +33,6 @@ const settings = [
   },
   {
     type: "input-text",
-    name: "stageTimeout",
-    label: "通关超时（单位：秒，需大于通关回放时长）",
-    default: "120"
-  },
-  {
-    type: "input-text",
     name: "expWeeklyLimit",
     label: "每周可获取的经验值上限",
     default: "4000"
@@ -52,7 +46,7 @@ const settings = [
   {
     type: "input-text",
     name: "thisAttempts",
-    label: "指定通关次数（0为自动判断）",
+    label: "指定通关次数（0表示自动判断）",
     default: "0"
   },
   {

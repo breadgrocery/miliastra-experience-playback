@@ -15,7 +15,7 @@ export default defineConfig({
   },
   // 清单信息
   manifest: {
-    name: "千星奇域 · 每周经验刷取(回放通关版)",
+    name: "千星奇域·每周经验刷取(回放通关版)",
     bgi_version: "0.53.0", // 该脚本适用的 BetterGI 最低版本
     saved_files: ["store/*.json", "playbacks/*.json"], // 脚本升级时需保留还原的文件/文件夹
     authors: [
