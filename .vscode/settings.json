@@ -1,0 +1,13 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    ".gitignore": "tsconfig.*,eslint.config.*,.prettierignore,prettier.config.*,lefthook.yml",
+    "package.json": "package-lock.json,yarn.lock,pnpm-lock.yaml,bun.lockb"
+  },
+  "search.exclude": {
+    ".vscode": true,
+    "dist": true,
+    "node_modules": true
+  }
+}

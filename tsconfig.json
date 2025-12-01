@@ -1,0 +1,17 @@
+{
+  "include": ["main.ts", "./src/**/*.ts", "eslint.config.ts"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "declaration": false,
+    "lib": ["ES2022"],
+    "skipLibCheck": true,
+    "strict": true,
+    "alwaysStrict": false,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "types": ["@bettergi/types"]
+  }
+}
