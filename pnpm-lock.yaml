@@ -12,8 +12,8 @@ importers:
         version: 0.1.19
     devDependencies:
       "@bettergi/cli":
-        specifier: ^0.1.7
-        version: 0.1.7
+        specifier: ^0.1.8
+        version: 0.1.8
       "@bettergi/types":
         specifier: ^0.1.5
         version: 0.1.5
@@ -110,10 +110,10 @@ packages:
       }
     engines: { node: ">=6.9.0" }
 
-  "@bettergi/cli@0.1.7":
+  "@bettergi/cli@0.1.8":
     resolution:
       {
-        integrity: sha512-3wq25AUqh1b6sB+ds9CQk3K2NRCfpjIzkUGBGGLstePg4y8/jNS05E9yiCa+kj6ASrHaSLSQ7U2XJgoscTbrOw==
+        integrity: sha512-cELncZUCU/VK6RkfxmGnu9Ug4lZ+Sqj3+C77YmifpmtCktF/cwDxfyIC/L4K9iUhNCT2Srqi1Hd4QSXfSbzlog==
       }
     hasBin: true
 
@@ -2227,7 +2227,7 @@ snapshots:
       "@babel/helper-string-parser": 7.27.1
       "@babel/helper-validator-identifier": 7.28.5
 
-  "@bettergi/cli@0.1.7":
+  "@bettergi/cli@0.1.8":
     dependencies:
       c12: 3.3.1
       chokidar: 4.0.3

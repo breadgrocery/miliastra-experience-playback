@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "declaration": false,
     "lib": ["ES2022"],
@@ -12,6 +12,6 @@
     "alwaysStrict": false,
     "removeComments": false,
     "noEmitOnError": true,
-    "types": ["@bettergi/types"]
+    "types": ["@bettergi/types", "@bettergi/cli/loaders"]
   }
 }

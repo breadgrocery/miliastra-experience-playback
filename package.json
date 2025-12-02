@@ -12,7 +12,7 @@
     "@bettergi/utils": "^0.1.19"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.1.7",
+    "@bettergi/cli": "^0.1.8",
     "@bettergi/types": "^0.1.5",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
