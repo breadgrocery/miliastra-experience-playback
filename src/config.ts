@@ -3,7 +3,8 @@ export const userConfig = {
   playbacks: (settings.playbacks || "通关回放1.json,通关回放2.json")
     .replace(/，/g, ",")
     .split(",")
-    .map(str => str.trim()),
+    .map(str => str.trim())
+    .filter(Boolean),
   expPerAttempt: Math.max(1, Number(settings.expPerAttempt || "20")),
   deleteStageSave: settings.deleteStageSave ?? false,
   deleteStageSaveKeyword: settings.deleteStageSaveKeyword || "深渊100层",

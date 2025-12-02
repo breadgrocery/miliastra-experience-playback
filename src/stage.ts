@@ -11,14 +11,17 @@ import {
   findStageEscBtn
 } from "./regions";
 
+//! 可用的执行通关回放文件列表
+const availablePlaybackFiles = () => {
+  const files = [...file.readPathSync("assets/playbacks")].map(path => path.replace(/\\/g, "/"));
+  return userConfig.playbacks
+    .map(file => `assets/playbacks/${file}`)
+    .filter(path => files.includes(path));
+};
+
 //! 确保通关回放文件存在
 export const ensurePlaybackFilesExist = () => {
-  const playbackFiles = [...file.readPathSync("assets/playbacks")].map(path =>
-    path.replace(/\\/g, "/")
-  );
-  const list = userConfig.playbacks
-    .map(p => `assets/playbacks/${p}`)
-    .filter(p => playbackFiles.includes(p));
+  const list = availablePlaybackFiles();
   if (list.length === 0) {
     throw new Error("未找到任何通关回放文件，请确保已录制回放并拷贝到 assets/playbacks 目录下");
   }
@@ -63,9 +66,8 @@ export const playStage = async () => {
 
 //! 执行通关回放文件（随机抽取）
 export const execStagePlayback = async () => {
-  const { playbacks } = userConfig;
-  const playback = playbacks[Math.floor(Math.random() * playbacks.length)];
-  const file = `assets/playbacks/${playback}`;
+  const list = availablePlaybackFiles();
+  const file = list[Math.floor(Math.random() * list.length)];
   log.info("执行通关回放文件: {file}", file);
   await keyMouseScript.runFile(file);
 };
