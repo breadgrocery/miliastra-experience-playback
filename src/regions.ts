@@ -48,9 +48,9 @@ export const findBeyondHallBtn = () => {
   return iro;
 };
 
-//! 全部奇域按钮
+//! 查找搜索奇域按钮
 export const findAllWonderlandsBtn = () => {
-  return findTextWithinBounds("全部", 1320, 0, 600, 95, { contains: true });
+  return findTextWithinBounds("搜索", 1320, 0, 600, 95, { contains: true });
 };
 //! 查找奇域搜索输入框
 export const findSearchWonderlandInput = () => {
@@ -81,7 +81,7 @@ export const findFirstSearchResultText = () => {
     }
   })();
 };
-//! 点击选择第一个搜索结果
+//! 点击选择第一个搜索结果位置
 export const clickToChooseFirstSearchResult = () => {
   click(355, 365);
 };
@@ -107,11 +107,11 @@ export const findGoToLobbyBtn = () => {
 export const findCreateRoomBtn = () => {
   return findTextWithinBounds("房间", 960, 140, 960, 70, { contains: true });
 };
-//! 点击加入准备区
+//! 点击加入准备区位置
 export const clickToPrepare = () => {
   click(770, 275);
 };
-//! 加入准备区提示
+//! 查找加入准备区提示
 export const findPrepareMsg = () => {
   return findTextWithinBounds("加入准备", 576, 432, 768, 216, {
     contains: true

@@ -54,6 +54,7 @@ export const deleteStageSave = async () => {
       log.warn("未找到要删除的关卡存档，跳过");
       return;
     }
+    stagePos?.drawSelf("group_text");
     const colPos = findExternalSaveColumnPos();
     if (colPos === undefined) {
       log.warn("无法确定关卡的局外存档列位置，跳过");

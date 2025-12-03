@@ -37,7 +37,7 @@ export const createRoom = async (room: string) => {
 
   log.info("打开全部奇域界面...");
   await assertRegionAppearing(
-    () => findHeaderTitle("全部", true),
+    () => findHeaderTitle("搜索", true),
     "打开全部奇域界面超时",
     () => {
       findAllWonderlandsBtn()?.click();
