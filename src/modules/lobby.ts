@@ -1,8 +1,9 @@
-import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
-import { userConfig } from "./config";
+import { assertRegionAppearing, openMenuPage, waitForAction } from "@bettergi/utils";
+import { userConfig } from "../config";
 import {
   findBeyondHallBtn,
   findBeyondRecommendBtn,
+  findBottomBtnText,
   findConfirmBtn,
   findGachaBtn,
   findGotTeyvatBtn,
@@ -15,6 +16,22 @@ export const isInLobby = () => findBeyondHallBtn() !== undefined;
 //! 判断是否处于提瓦特大陆
 export const isInTeyvat = () => {
   return findGachaBtn() !== undefined && findBeyondRecommendBtn() !== undefined;
+};
+
+//! 从提瓦特前往公共大厅
+export const goToPublicLobby = async () => {
+  await openMenuPage("大厅");
+
+  await assertRegionAppearing(
+    findBeyondHallBtn,
+    "进入公共大厅超时",
+    async () => {
+      findBottomBtnText("公共大厅", true)?.click();
+      await sleep(1000);
+      findConfirmBtn()?.click();
+    },
+    { maxAttempts: 120 }
+  );
 };
 
 //! 退出大厅返回提瓦特大陆

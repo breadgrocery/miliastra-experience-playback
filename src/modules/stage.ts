@@ -1,7 +1,7 @@
 import { assertRegionAppearing, assertRegionDisappearing, waitForAction } from "@bettergi/utils";
-import { userConfig } from "./config";
 import { isInLobby } from "./lobby";
 import {
+  clickToContinue,
   clickToPrepare,
   findBottomBtnText,
   findCloseDialog,
@@ -11,23 +11,12 @@ import {
   findStageEscBtn
 } from "./regions";
 
-//! 可用的执行通关回放文件列表
-const availablePlaybackFiles = () => {
-  const files = [...file.readPathSync("assets/playbacks")].map(path => path.replace(/\\/g, "/"));
-  return userConfig.playbacks
-    .map(file => `assets/playbacks/${file}`)
-    .filter(path => files.includes(path));
+//! 已有的执行通关回放文件列表
+export const availablePlaybackFiles = () => {
+  return [...file.readPathSync("assets/playbacks")].map(path => path.replace(/\\/g, "/"));
 };
 
-//! 确保通关回放文件存在
-export const ensurePlaybackFilesExist = () => {
-  const list = availablePlaybackFiles();
-  if (list.length === 0) {
-    throw new Error("未找到任何通关回放文件，请确保已录制回放并拷贝到 assets/playbacks 目录下");
-  }
-};
-
-export const playStage = async () => {
+export const playStage = async (playbacks: string[]) => {
   //! 等待进入关卡
   await assertRegionAppearing(
     findStageEscBtn,
@@ -57,7 +46,7 @@ export const playStage = async () => {
   );
 
   //! 执行随机通关回放文件
-  await execStagePlayback();
+  await execStagePlayback(playbacks);
   await sleep(3000);
 
   //! 退出关卡返回大厅
@@ -65,9 +54,8 @@ export const playStage = async () => {
 };
 
 //! 执行通关回放文件（随机抽取）
-export const execStagePlayback = async () => {
-  const list = availablePlaybackFiles();
-  const file = list[Math.floor(Math.random() * list.length)];
+export const execStagePlayback = async (playbacks: string[]) => {
+  const file = playbacks[Math.floor(Math.random() * playbacks.length)];
   log.info("执行通关回放文件: {file}", file);
   await keyMouseScript.runFile(file);
 };
@@ -101,10 +89,12 @@ export const exitStageToLobby = async () => {
     isInLobby,
     async () => {
       //! 跳过奇域等级提升页面（奇域等级每逢11、21、31、41级时出现加星页面）
-      findSkipLevelUpMsg()?.click();
+      if (findSkipLevelUpMsg()) {
+        clickToContinue();
+      }
 
       //! 点击底部 “返回大厅” 按钮
-      findBottomBtnText("大厅", true)?.click();
+      findBottomBtnText("返回大厅")?.click();
     },
     { maxAttempts: 60 }
   );

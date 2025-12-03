@@ -78,8 +78,13 @@ export const createRoom = async (room: string) => {
       return fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
     },
     async () => {
-      findSearchWonderlandBtn()?.click();
-      await sleep(1000);
+      const searchBtn = findSearchWonderlandBtn();
+      if (searchBtn) {
+        searchBtn.click();
+        await sleep(200);
+        searchBtn.click();
+      }
+      await sleep(500);
       fswnt = findFirstSearchResultText();
     },
     { maxAttempts: 30, retryInterval: 200 }

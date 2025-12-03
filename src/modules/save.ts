@@ -4,7 +4,7 @@ import {
   getErrorMessage,
   isHostException
 } from "@bettergi/utils";
-import { userConfig } from "./config";
+import { userConfig } from "../config";
 import {
   findBeyondFavoritesBtn,
   findConfirmBtn,

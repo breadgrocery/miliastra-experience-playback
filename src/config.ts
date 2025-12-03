@@ -1,4 +1,8 @@
+import { getNextDay4AM, getNextMonday4AM, useStoreWithDefaults } from "@bettergi/utils";
+
+//! 用户脚本设置
 export const userConfig = {
+  //! 每周任务相关设置
   room: settings.room || "20134075027",
   playbacks: (settings.playbacks || "通关回放1.json,通关回放2.json")
     .replace(/，/g, ",")
@@ -11,5 +15,38 @@ export const userConfig = {
   expWeeklyLimit: Math.max(1, Number(settings.expWeeklyLimit || "4000")),
   force: settings.force ?? false,
   thisAttempts: Math.max(0, Number(settings.thisAttempts || "0")),
+  //! 每日任务相关设置
+  dailyEnabled: settings.dailyEnabled ?? false,
+  dailyRooms: (settings.dailyRooms || "20134075027,24429042323,28644538672")
+    .replace(/，/g, ",")
+    .split(",")
+    .map(str => str.trim())
+    .filter(Boolean),
+  dailyPlaybacks: (
+    settings.dailyPlaybacks || "通关回放1.json,通关回放2.json;通关回放2.json;20秒按1通关.json"
+  )
+    .replace(/，/g, ",")
+    .replace(/；/g, ";")
+    .split(";")
+    .map(str => str.trim())
+    .filter(Boolean)
+    .reduce((arr, room) => {
+      const files = room
+        .split(",")
+        .map(str => str.trim())
+        .filter(Boolean);
+      if (files.length > 0) arr.push(files);
+      return arr;
+    }, [] as string[][]),
+  dailyLimit: Math.max(1, Number(settings.dailyLimit || "1")),
+  dailyForce: settings.dailyForce ?? false,
   goToTeyvat: settings.goToTeyvat ?? true
 };
+
+//! 脚本数据存储
+export const store = useStoreWithDefaults("data", {
+  weekly: { expGained: 0, attempts: 0 },
+  daily: { attempts: 0 },
+  nextWeek: getNextMonday4AM().getTime(),
+  nextDay: getNextDay4AM().getTime()
+});
