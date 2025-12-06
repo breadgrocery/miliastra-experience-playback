@@ -3,6 +3,7 @@ import { isInLobby } from "./lobby";
 import {
   clickToContinue,
   clickToPrepare,
+  findBeyondHallBtn,
   findBottomBtnText,
   findCloseDialog,
   findExitStageBtn,
@@ -71,9 +72,21 @@ export const exitStage = async () => {
     () => {
       keyPress("VK_ESCAPE");
     },
-    { maxAttempts: 5, retryInterval: 2000 }
+    { maxAttempts: 10, retryInterval: 1000 }
   );
-  findExitStageBtn()?.click();
+
+  await assertRegionAppearing(
+    findBeyondHallBtn,
+    "返回大厅超时",
+    async () => {
+      //! 点击 “中断挑战” 按钮
+      findExitStageBtn()?.click();
+      //! 点击底部 “返回大厅” 按钮
+      findBottomBtnText("返回大厅")?.click();
+    },
+    { maxAttempts: 60 }
+  );
+
   await genshin.returnMainUi();
 };
 
