@@ -72,7 +72,7 @@ export const deleteStageSave = async () => {
     );
 
     //! 计算勾选框位置并点击
-    const [cx, cy] = [(colPos.x * 2 + colPos.width) / 2, stagePos.y + 20];
+    const [cx, cy] = [(colPos.x * 2 + colPos.width) / 2, stagePos.y + 40];
     await assertRegionAppearing(
       () => findDeleteExternalSaveChecked(colPos.x),
       "勾选要删除的局外存档超时",
