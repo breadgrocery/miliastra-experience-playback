@@ -35,14 +35,17 @@ export const goToRecommendedWonderlands = async () => {
 export const createRoom = async (room: string) => {
   await goToRecommendedWonderlands();
 
-  log.info("打开全部奇域界面...");
+  log.info("打开搜索奇域界面...");
   await assertRegionAppearing(
     () => findHeaderTitle("搜索", true),
-    "打开全部奇域界面超时",
+    "打开搜索奇域界面超时",
     () => {
       findAllWonderlandsBtn()?.click();
     }
   );
+
+  //! 减少网络影响带来的影响
+  log.info("等待奇域列表加载完成...");
   await sleep(1500);
 
   //! 记录搜索前的第一个奇域名称
@@ -54,7 +57,7 @@ export const createRoom = async (room: string) => {
     await sleep(500);
     wi += 1;
   }
-  if (iwnt === undefined) throw new Error("加载全部奇域列表超时");
+  if (iwnt === undefined) throw new Error("奇域列表加载超时");
   log.info("搜索前的第一个奇域名称: {iwnt}", iwnt);
 
   log.info("粘贴奇域关卡文本: {room}", room);

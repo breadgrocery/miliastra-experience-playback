@@ -94,7 +94,7 @@ export const findEnterRoomShortcut = () => {
 //! 房间：查找退出房间按钮
 export const findLeaveRoomBtn = () => {
   const img = "assets/UI_Icon_Leave_Right.png";
-  const iro = findImageWithinBounds(img, 1570, 0, 350, 100);
+  const iro = findImageWithinBounds(img, 1570, 0, 350, 100, { threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -155,8 +155,8 @@ export const findExternalSaveColumnPos = () => {
 export const findDeleteExternalSaveChecked = (colPos: number) => {
   const img = "assets/Checkbox_Checked.png";
   const iro = findImageWithinBounds(img, colPos, 250, 290, 710, {
-    threshold: 0.6,
-    use3Channels: false
+    threshold: 0.75,
+    use3Channels: true
   });
   iro?.drawSelf("group_img");
   return iro;

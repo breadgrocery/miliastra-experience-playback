@@ -82,7 +82,7 @@ export const fetchCultivateReward = async () => {
       keyPress("VK_F1");
       await sleep(2000);
       if (findHeaderTitle("盛邀", true) === undefined) {
-        keyPress("VK_E");
+        keyPress("VK_Q");
       }
     },
     { maxAttempts: 10, retryInterval: 1000 }
