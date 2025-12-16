@@ -9,20 +9,20 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "^0.1.19"
+    "@bettergi/utils": "^0.1.24"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.1.9",
-    "@bettergi/types": "^0.1.5",
+    "@bettergi/cli": "^0.1.10",
+    "@bettergi/types": "^0.1.7",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
-    "eslint": "^9.39.1",
-    "lefthook": "^2.0.9",
+    "eslint": "^9.39.2",
+    "lefthook": "^2.0.12",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.49.0"
+    "typescript-eslint": "^8.50.0"
   },
   "commitlint": {
     "extends": [
