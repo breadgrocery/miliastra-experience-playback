@@ -19,7 +19,7 @@ export const findBottomBtnText = (text: string, contains?: boolean) => {
 //! 通用：查找关闭对话框按钮
 export const findCloseDialog = () => {
   const img = "assets/UI_BtnIcon_Close.png";
-  const iro = findImageWithinBounds(img, 480, 216, 960, 648, { useMask: true, threshold: 0.75 });
+  const iro = findImageWithinBounds(img, 410, 160, 1100, 660, { useMask: true, threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };

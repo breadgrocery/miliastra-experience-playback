@@ -1,6 +1,6 @@
 {
   "name": "miliastra-experience-playback",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "千星奇域·每周经验刷取(回放通关版)",
   "type": "module",
   "scripts": {
