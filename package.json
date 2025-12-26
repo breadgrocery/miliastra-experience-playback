@@ -1,6 +1,6 @@
 {
   "name": "miliastra-experience-playback",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "千星奇域·每周经验刷取(回放通关版)",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "^0.1.24"
+    "@bettergi/utils": "^0.1.25"
   },
   "devDependencies": {
     "@bettergi/cli": "^0.1.10",
@@ -22,7 +22,7 @@
     "lefthook": "^2.0.12",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.0"
+    "typescript-eslint": "^8.50.1"
   },
   "commitlint": {
     "extends": [
