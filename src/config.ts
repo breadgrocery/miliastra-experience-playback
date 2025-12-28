@@ -38,6 +38,7 @@ export const userConfig = {
     }, [] as string[][]),
   dailyLimit: Math.max(1, Number(settings.dailyLimit || "1")),
   dailyForce: settings.dailyForce ?? false,
+  closeStageDialog: settings.closeStageDialog ?? true,
   goToTeyvat: settings.goToTeyvat ?? true
 };
 

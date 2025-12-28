@@ -1,4 +1,5 @@
 import { assertRegionAppearing, assertRegionDisappearing, waitForAction } from "@bettergi/utils";
+import { userConfig } from "../config";
 import { isInLobby } from "./lobby";
 import {
   clickToContinue,
@@ -43,14 +44,16 @@ export const playStage = async (playbacks: string[]) => {
   }
 
   //! 关闭游戏说明对话框
-  await assertRegionDisappearing(
-    findCloseDialog,
-    "关闭游戏说明对话框超时",
-    () => {
-      findCloseDialog()?.click();
-    },
-    { maxAttempts: 10, retryInterval: 500 }
-  );
+  if (userConfig.closeStageDialog) {
+    await assertRegionDisappearing(
+      findCloseDialog,
+      "关闭游戏说明对话框超时",
+      () => {
+        findCloseDialog()?.click();
+      },
+      { maxAttempts: 10, retryInterval: 500 }
+    );
+  }
 
   //! 执行随机通关回放文件
   await execStagePlayback(playbacks);
