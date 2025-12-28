@@ -49,8 +49,8 @@ export const execWeeklyTask = async () => {
   //! 创建进度追踪器
   const tracker = new ProgressTracker(attempts);
   //! 迭代尝试
-  try {
-    for (let i = 0; i < attempts; i++) {
+  for (let i = 0; i < attempts; i++) {
+    try {
       tracker.print(`开始本周第 ${store.weekly.attempts + 1} 次奇域挑战...`);
 
       //! 删除关卡存档
@@ -74,13 +74,13 @@ export const execWeeklyTask = async () => {
           break;
         }
       }
+    } catch (err: any) {
+      //! 发生主机异常（如：任务取消异常等），无法再继续执行
+      if (isHostException(err)) throw err;
+      //! 发生脚本流程异常，尝试退出关卡（如果在关卡中）
+      await exitStage();
+      log.error("脚本执行出错: {error}", getErrorMessage(err));
     }
-  } catch (err: any) {
-    //! 发生主机异常（如：任务取消异常等），无法再继续执行
-    if (isHostException(err)) throw err;
-    //! 发生脚本流程异常，尝试退出关卡（如果在关卡中）
-    await exitStage();
-    log.error("脚本执行出错: {error}", getErrorMessage(err));
   }
 
   await genshin.returnMainUi();

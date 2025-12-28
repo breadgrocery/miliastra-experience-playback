@@ -6,20 +6,26 @@ import {
 
 //! 通用：查找确认按钮
 export const findConfirmBtn = () => {
-  return findTextWithinBounds("确认", 480, 720, 960, 145);
+  const txt = findTextWithinBounds("确认", 480, 720, 960, 145);
+  txt?.drawSelf("group_text");
+  return txt;
 };
 //! 通用：查找标题文字
 export const findHeaderTitle = (title: string, contains?: boolean) => {
-  return findTextWithinBounds(title, 0, 0, 300, 95, { contains });
+  const txt = findTextWithinBounds(title, 0, 0, 300, 95, { contains });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 //! 通用：查找底部按钮文字
 export const findBottomBtnText = (text: string, contains?: boolean) => {
-  return findTextWithinBounds(text, 0, 980, 1920, 100, { contains });
+  const txt = findTextWithinBounds(text, 0, 980, 1920, 100, { contains });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 //! 通用：查找关闭对话框按钮
 export const findCloseDialog = () => {
   const img = "assets/UI_BtnIcon_Close.png";
-  const iro = findImageWithinBounds(img, 410, 160, 1100, 660, { useMask: true, threshold: 0.8 });
+  const iro = findImageWithinBounds(img, 410, 160, 1100, 660, { useMask: true, threshold: 0.7 });
   iro?.drawSelf("group_img");
   return iro;
 };
