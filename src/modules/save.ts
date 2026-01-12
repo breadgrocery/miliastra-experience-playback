@@ -18,7 +18,7 @@ import {
 import { goToRecommendedWonderlands } from "./room";
 
 //! 进入管理关卡存档界面
-export const goToManageStageSave = async () => {
+const goToManageStageSave = async () => {
   //! 打开人气奇域
   await goToRecommendedWonderlands();
 

@@ -13,7 +13,7 @@ import {
 export const isInLobby = () => findBeyondHallBtn() !== undefined;
 
 //! 判断是否处于提瓦特大陆
-export const isInTeyvat = () => {
+const isInTeyvat = () => {
   return findGachaBtn() !== undefined && findBeyondRecommendBtn() !== undefined;
 };
 

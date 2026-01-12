@@ -64,7 +64,7 @@ export const playStage = async (playbacks: string[]) => {
 };
 
 //! 执行通关回放文件（随机抽取）
-export const execStagePlayback = async (playbacks: string[]) => {
+const execStagePlayback = async (playbacks: string[]) => {
   const file = playbacks[Math.floor(Math.random() * playbacks.length)];
   log.info("执行通关回放文件: {file}", file);
   await keyMouseScript.runFile(file);
@@ -100,7 +100,7 @@ export const exitStage = async () => {
 };
 
 //! 退出关卡返回大厅
-export const exitStageToLobby = async () => {
+const exitStageToLobby = async () => {
   if (isInLobby()) {
     log.warn("已处于奇域大厅，跳过");
     return;

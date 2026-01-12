@@ -17,7 +17,7 @@ import {
 } from "../constants/region";
 import { isInLobby } from "./lobby";
 
-export const isInRoom = () => findHeaderTitle("房间", true) !== undefined;
+const isInRoom = () => findHeaderTitle("房间", true) !== undefined;
 
 //! 打开人气奇域
 export const goToRecommendedWonderlands = async () => {
@@ -32,7 +32,7 @@ export const goToRecommendedWonderlands = async () => {
 };
 
 //! 创建并进入奇域房间
-export const createRoom = async (room: string) => {
+const createRoom = async (room: string) => {
   await goToRecommendedWonderlands();
 
   log.info("打开搜索奇域界面...");
