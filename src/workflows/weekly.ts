@@ -4,7 +4,8 @@ import {
   getNextMonday4AM,
   isHostException
 } from "@bettergi/utils";
-import { store, userConfig } from "../config";
+import { userConfig } from "../constants/config";
+import { store } from "../constants/store";
 import { enterRoom, leaveRoom } from "../modules/room";
 import { deleteStageSave } from "../modules/save";
 import { availablePlaybackFiles, exitStage, playStage } from "../modules/stage";

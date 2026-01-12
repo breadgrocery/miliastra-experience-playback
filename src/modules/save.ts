@@ -4,7 +4,7 @@ import {
   getErrorMessage,
   isHostException
 } from "@bettergi/utils";
-import { userConfig } from "../config";
+import { userConfig } from "../constants/config";
 import {
   findBeyondFavoritesBtn,
   findConfirmBtn,
@@ -14,7 +14,7 @@ import {
   findExternalSaveColumnPos,
   findManageStagesBtn,
   findSaveToDeletePos
-} from "./regions";
+} from "../constants/region";
 import { goToRecommendedWonderlands } from "./room";
 
 //! 进入管理关卡存档界面

@@ -1,5 +1,5 @@
 import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
-import { userConfig } from "../config";
+import { userConfig } from "../constants/config";
 import {
   findBeyondHallBtn,
   findBeyondRecommendBtn,
@@ -7,7 +7,7 @@ import {
   findGachaBtn,
   findGotTeyvatBtn,
   findHeaderTitle
-} from "./regions";
+} from "../constants/region";
 
 //! 判断是否处于奇域大厅
 export const isInLobby = () => findBeyondHallBtn() !== undefined;

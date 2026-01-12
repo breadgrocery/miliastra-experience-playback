@@ -1,5 +1,4 @@
 import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
-import { isInLobby } from "./lobby";
 import {
   clickToChooseFirstSearchResult,
   findAllWonderlandsBtn,
@@ -15,7 +14,8 @@ import {
   findSearchWonderlandBtn,
   findSearchWonderlandInput,
   findSearchWonderlandThrottleMsg
-} from "./regions";
+} from "../constants/region";
+import { isInLobby } from "./lobby";
 
 export const isInRoom = () => findHeaderTitle("房间", true) !== undefined;
 

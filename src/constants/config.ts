@@ -1,5 +1,3 @@
-import { getNextDay4AM, getNextMonday4AM, useStoreWithDefaults } from "@bettergi/utils";
-
 //! 用户脚本设置
 export const userConfig = {
   //! 每周任务相关设置
@@ -40,12 +38,4 @@ export const userConfig = {
   dailyForce: settings.dailyForce ?? false,
   closeStageDialog: settings.closeStageDialog ?? true,
   goToTeyvat: settings.goToTeyvat ?? true
-};
-
-//! 脚本数据存储
-export const store = useStoreWithDefaults("data", {
-  weekly: { expGained: 0, attempts: 0 },
-  daily: { attempts: 0 },
-  nextWeek: getNextMonday4AM().getTime(),
-  nextDay: getNextDay4AM().getTime()
-});
+} as const;

@@ -1,6 +1,5 @@
 import { assertRegionAppearing, assertRegionDisappearing, waitForAction } from "@bettergi/utils";
-import { userConfig } from "../config";
-import { isInLobby } from "./lobby";
+import { userConfig } from "../constants/config";
 import {
   clickToContinue,
   clickToPrepare,
@@ -11,7 +10,8 @@ import {
   findPrepareMsg,
   findSkipLevelUpMsg,
   findStageEscBtn
-} from "./regions";
+} from "../constants/region";
+import { isInLobby } from "./lobby";
 
 //! 已有的执行通关回放文件列表
 export const availablePlaybackFiles = () => {

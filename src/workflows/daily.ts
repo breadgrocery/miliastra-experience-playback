@@ -1,5 +1,6 @@
 import { ProgressTracker, getErrorMessage, getNextDay4AM, isHostException } from "@bettergi/utils";
-import { store, userConfig } from "../config";
+import { userConfig } from "../constants/config";
+import { store } from "../constants/store";
 import { fetchBattlepassExp, fetchCultivateReward } from "../modules/reawrd";
 import { enterRoom, leaveRoom } from "../modules/room";
 import { availablePlaybackFiles, exitStage, playStage } from "../modules/stage";

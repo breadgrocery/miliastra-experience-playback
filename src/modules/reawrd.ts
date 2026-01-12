@@ -1,5 +1,4 @@
 import { assertRegionAppearing, assertRegionDisappearing } from "@bettergi/utils";
-import { isInLobby } from "./lobby";
 import {
   clickToContinue,
   findBeyondBattlepassBtn,
@@ -7,7 +6,8 @@ import {
   findBottomBtnText,
   findFetchRewardBtn,
   findHeaderTitle
-} from "./regions";
+} from "../constants/region";
+import { isInLobby } from "./lobby";
 
 //! 领取诸界纪游经验
 export const fetchBattlepassExp = async () => {
@@ -77,7 +77,7 @@ export const fetchCultivateReward = async () => {
   //! 打开奇趣盛邀
   await assertRegionAppearing(
     () => findHeaderTitle("盛邀", true),
-    "打开任务书超时",
+    "打开奇趣盛邀超时，活动可能已结束",
     async () => {
       keyPress("VK_F1");
       await sleep(2000);
@@ -85,7 +85,7 @@ export const fetchCultivateReward = async () => {
         keyPress("VK_Q");
       }
     },
-    { maxAttempts: 10, retryInterval: 1000 }
+    { maxAttempts: 5, retryInterval: 1000 }
   );
 
   //! 仅领取妙思觅索奖励（巧趣醒转奖励里有部件礼箱会卡流程）
