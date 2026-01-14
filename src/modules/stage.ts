@@ -10,7 +10,7 @@ import {
   findPrepareMsg,
   findSkipLevelUpMsg,
   findStageEscBtn
-} from "../constants/region";
+} from "../constants/regions";
 import { isInLobby } from "./lobby";
 
 //! 已有的执行通关回放文件列表

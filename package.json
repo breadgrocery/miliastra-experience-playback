@@ -3,11 +3,19 @@
   "version": "0.1.8",
   "description": "千星奇域·每周经验刷取(回放通关版)",
   "type": "module",
+  "keywords": [
+    "千星奇域"
+  ],
   "author": {
     "name": "breadgrocery",
     "url": "https://github.com/breadgrocery/miliastra-experience-playback"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "躁动的氨气",
+      "url": "https://github.com/A-Little-AnQi"
+    }
+  ],
   "scripts": {
     "prepare": "lefthook install",
     "dev": "bettergi-cli --watch",
@@ -22,10 +30,10 @@
     "@eslint/js": "^9.39.2",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "eslint": "^9.39.2",
-    "lefthook": "^2.0.14",
+    "lefthook": "^2.0.15",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.52.0"
+    "typescript-eslint": "^8.53.0"
   },
   "commitlint": {
     "extends": [

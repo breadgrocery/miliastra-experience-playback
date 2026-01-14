@@ -14,7 +14,7 @@ import {
   findSearchWonderlandBtn,
   findSearchWonderlandInput,
   findSearchWonderlandThrottleMsg
-} from "../constants/region";
+} from "../constants/regions";
 import { isInLobby } from "./lobby";
 
 const isInRoom = () => findHeaderTitle("房间", true) !== undefined;

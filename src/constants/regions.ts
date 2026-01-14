@@ -34,10 +34,10 @@ export const clickToContinue = () => {
   click(900, 1050);
 };
 
-//! 查找抽卡按钮（判断处于大世界条件一）
-export const findGachaBtn = () => {
-  const img = "assets/UI_BtnIcon_Gacha.png";
-  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.75 });
+//! 查找元素视野按钮（判断处于大世界条件一）
+export const findElementViewBtn = () => {
+  const img = "assets/UI_BtnIcon_ElementView.png";
+  const iro = findImageWithinBounds(img, 0, 0, 500, 80, { useMask: true, threshold: 0.85 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -196,7 +196,7 @@ export const findGotTeyvatBtn = () => {
 //! 纪游：查找诸界纪游按钮
 export const findBeyondBattlepassBtn = () => {
   const img = "assets/UI_BtnIcon_Beyond_Battlepass.png";
-  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.75 });
+  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -207,7 +207,11 @@ export const findBeyondBattlepassPopup = () => {
 //! 纪游：查找领取奖励按钮
 export const findFetchRewardBtn = () => {
   const img = "assets/UI_Img_UGCCultivateReward_FetchHint.png";
-  const iro = findImageWithinBounds(img, 1670, 100, 250, 880, { useMask: true, threshold: 0.75 });
+  const iro = findImageWithinBounds(img, 1550, 100, 370, 880, {
+    useMask: true,
+    use3Channels: true,
+    threshold: 0.9
+  });
   iro?.drawSelf("group_img");
   return iro;
 };

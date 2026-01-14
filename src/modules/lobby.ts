@@ -4,17 +4,17 @@ import {
   findBeyondHallBtn,
   findBeyondRecommendBtn,
   findConfirmBtn,
-  findGachaBtn,
+  findElementViewBtn,
   findGotTeyvatBtn,
   findHeaderTitle
-} from "../constants/region";
+} from "../constants/regions";
 
 //! 判断是否处于奇域大厅
 export const isInLobby = () => findBeyondHallBtn() !== undefined;
 
 //! 判断是否处于提瓦特大陆
 const isInTeyvat = () => {
-  return findGachaBtn() !== undefined && findBeyondRecommendBtn() !== undefined;
+  return findBeyondRecommendBtn() !== undefined && findElementViewBtn() !== undefined;
 };
 
 //! 退出大厅返回提瓦特大陆
