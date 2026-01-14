@@ -1,9 +1,17 @@
 import { getNextDay4AM, getNextMonday4AM, useStoreWithDefaults } from "@bettergi/utils";
+import { findUidText } from "./regions";
 
 //! 脚本数据存储
-export const store = useStoreWithDefaults("data", {
-  weekly: { expGained: 0, attempts: 0 },
-  daily: { attempts: 0 },
-  nextWeek: getNextMonday4AM().getTime(),
-  nextDay: getNextDay4AM().getTime()
-});
+export const store = (() => {
+  // !识别UID
+  const uid = findUidText()?.text.replace(/\D/g, "");
+  if (!uid) throw new Error("创建用户数据存储失败: 无法识别UID");
+
+  return useStoreWithDefaults(uid, {
+    uid,
+    weekly: { expGained: 0, attempts: 0 },
+    daily: { attempts: 0 },
+    nextWeek: getNextMonday4AM().getTime(),
+    nextDay: getNextDay4AM().getTime()
+  });
+})();

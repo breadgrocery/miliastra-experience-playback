@@ -65,7 +65,7 @@ export const execDailyTask = async () => {
           //! 离开当前所在房间（如果存在）
           await leaveRoom();
 
-          tracker.print(`开始当日第 ${store.daily.attempts + 1} 次奇域挑战...`);
+          tracker.print(`开始 ${store.uid} 当日第 ${store.daily.attempts + 1} 次奇域挑战...`);
 
           //! 进入房间
           await enterRoom(room);

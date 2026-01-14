@@ -34,6 +34,11 @@ export const clickToContinue = () => {
   click(900, 1050);
 };
 
+//! 查找UID文本
+export const findUidText = () => {
+  return findTextWithinBounds("UID", 1620, 1050, 300, 30, { contains: true });
+};
+
 //! 查找元素视野按钮（判断处于大世界条件一）
 export const findElementViewBtn = () => {
   const img = "assets/UI_BtnIcon_ElementView.png";
