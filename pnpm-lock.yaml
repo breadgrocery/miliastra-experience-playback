@@ -8,14 +8,14 @@ importers:
   .:
     devDependencies:
       "@bettergi/cli":
-        specifier: ^0.2.6
-        version: 0.2.6
+        specifier: ^0.2.7
+        version: 0.2.7
       "@bettergi/types":
         specifier: ^0.1.10
         version: 0.1.10
       "@bettergi/utils":
-        specifier: ^0.1.25
-        version: 0.1.25
+        specifier: ^0.1.27
+        version: 0.1.27
       "@commitlint/cli":
         specifier: ^20.3.1
         version: 20.3.1(@types/node@25.0.8)(typescript@5.9.3)
@@ -109,10 +109,10 @@ packages:
       }
     engines: { node: ">=6.9.0" }
 
-  "@bettergi/cli@0.2.6":
+  "@bettergi/cli@0.2.7":
     resolution:
       {
-        integrity: sha512-eHPAZlLdUrcTi40fmfmKgzdVc4SUTtvjfm9D31NrTjhXLwBryz4UStxvtCl8xzy+NJoWBCqD0gS6V3yJouK5Rg==
+        integrity: sha512-meQ5m1dicSivul/Qcu1exDxLsf5FA05N48o5gI2/yafOmM992ZphA3/7TtPaD97/dRhvlGj/1BwZJN5Jzw8Rnw==
       }
     hasBin: true
 
@@ -122,10 +122,10 @@ packages:
         integrity: sha512-GNWB/DejtPCrfhVbWzTcuWXzHmB90K9AO0yfNLzbKStI76Uh5ov4BKOgBbql2ExN+xBRPEb4xwxxbUYV4lk+VA==
       }
 
-  "@bettergi/utils@0.1.25":
+  "@bettergi/utils@0.1.27":
     resolution:
       {
-        integrity: sha512-q7YvcdHD2q9+D0/Tvh5esuSNmg0qRiemgoGgFfXGq6ry76oviOPX5LujJWXLjC4P9EIMLde7O/mAz7eRYwV2sQ==
+        integrity: sha512-gODMTTWZNdjctpQxyueEmnakkw9lLA3+LdVk0CRsQWYO7NlgJSMf5lodxORiAymHW1faSiK0JV0WkIfOEXOLZQ==
       }
 
   "@commitlint/cli@20.3.1":
@@ -2217,7 +2217,7 @@ snapshots:
       "@babel/helper-string-parser": 7.27.1
       "@babel/helper-validator-identifier": 7.28.5
 
-  "@bettergi/cli@0.2.6":
+  "@bettergi/cli@0.2.7":
     dependencies:
       "@bettergi/types": 0.1.10
       "@rolldown/pluginutils": 1.0.0-beta.59
@@ -2239,7 +2239,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  "@bettergi/utils@0.1.25":
+  "@bettergi/utils@0.1.27":
     dependencies:
       "@bettergi/types": 0.1.10
     transitivePeerDependencies:
