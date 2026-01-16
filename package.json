@@ -24,7 +24,7 @@
   "devDependencies": {
     "@bettergi/cli": "^0.2.11",
     "@bettergi/types": "^0.1.10",
-    "@bettergi/utils": "^0.1.27",
+    "@bettergi/utils": "^0.1.29",
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@eslint/js": "^9.39.2",
