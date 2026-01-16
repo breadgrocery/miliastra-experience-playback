@@ -1,6 +1,6 @@
-import { type ExtractSettingsMap, type Settings } from "@bettergi/cli";
+import { type ExtractSettingsMap, defineSettings } from "@bettergi/cli";
 
-const settings = [
+const settings = defineSettings([
   {
     type: "input-text",
     name: "room",
@@ -91,13 +91,12 @@ const settings = [
     label: "完成后返回提瓦特大陆",
     default: true
   }
-] as const satisfies Settings;
+]);
 
-export default settings as Settings;
-
-/** 覆写设置类型定义 */
-export type SettingsMap = ExtractSettingsMap<typeof settings>;
-
+/** 覆写脚本设置类型定义 */
+type GlobalSettings = ExtractSettingsMap<typeof settings> & Record<string, any>;
 declare global {
-  var settings: Record<string, any> & SettingsMap;
+  var settings: GlobalSettings;
 }
+
+export default settings;

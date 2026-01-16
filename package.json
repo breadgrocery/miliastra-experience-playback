@@ -13,7 +13,7 @@
   "contributors": [
     {
       "name": "躁动的氨气",
-      "url": "https://github.com/A-Little-AnQi"
+      "url": "https://github.com/zaodonganqi"
     }
   ],
   "scripts": {
@@ -22,7 +22,7 @@
     "build": "bettergi-cli"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.2.7",
+    "@bettergi/cli": "^0.2.11",
     "@bettergi/types": "^0.1.10",
     "@bettergi/utils": "^0.1.27",
     "@commitlint/cli": "^20.3.1",
@@ -31,7 +31,7 @@
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "eslint": "^9.39.2",
     "lefthook": "^2.0.15",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0"
   },
