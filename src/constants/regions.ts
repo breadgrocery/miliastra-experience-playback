@@ -25,7 +25,7 @@ export const findBottomBtnText = (text: string, contains?: boolean) => {
 //! 通用：查找关闭对话框按钮
 export const findCloseDialog = () => {
   const img = "assets/UI_BtnIcon_Close.png";
-  const iro = findImageWithinBounds(img, 410, 160, 1100, 660, { useMask: true, threshold: 0.7 });
+  const iro = findImageWithinBounds(img, 410, 160, 1100, 660, { useMask: true, threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -39,24 +39,17 @@ export const findUidText = () => {
   return findTextWithinBounds("UID", 1620, 1050, 300, 30, { contains: true });
 };
 
-//! 查找元素视野按钮（判断处于大世界条件一）
+//! 查找元素视野按钮（判断处于大世界）
 export const findElementViewBtn = () => {
   const img = "assets/UI_BtnIcon_ElementView.png";
-  const iro = findImageWithinBounds(img, 0, 0, 500, 80, { useMask: true, threshold: 0.85 });
-  iro?.drawSelf("group_img");
-  return iro;
-};
-//! 查找推荐奇域按钮（判断处于大世界条件二）
-export const findBeyondRecommendBtn = () => {
-  const img = "assets/UI_BtnIcon_Beyond_Recommend.png";
-  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.75 });
+  const iro = findImageWithinBounds(img, 0, 0, 500, 80, { useMask: true, threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };
 //! 查找奇域大厅按钮（判断处于奇域大厅）
 export const findBeyondHallBtn = () => {
   const img = "assets/UI_BtnIcon_Beyond_Hall.png";
-  const iro = findImageWithinBounds(img, 200, 0, 150, 100, { useMask: true, threshold: 0.75 });
+  const iro = findImageWithinBounds(img, 200, 0, 150, 100, { useMask: true, threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -180,7 +173,7 @@ export const findDeleteStageSaveBtn = () => {
 //! 关卡：查找关卡退出按钮
 export const findStageEscBtn = () => {
   const img = "assets/UI_Icon_Leave.png";
-  const iro = findImageWithinBounds(img, 0, 0, 100, 100, { threshold: 0.75 });
+  const iro = findImageWithinBounds(img, 0, 0, 100, 100, { useMask: true, threshold: 0.8 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -215,7 +208,7 @@ export const findFetchRewardBtn = () => {
   const iro = findImageWithinBounds(img, 1550, 100, 370, 880, {
     useMask: true,
     use3Channels: true,
-    threshold: 0.9
+    threshold: 0.8
   });
   iro?.drawSelf("group_img");
   return iro;
