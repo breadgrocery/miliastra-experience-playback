@@ -49,7 +49,7 @@ export const findElementViewBtn = () => {
 //! 查找奇域大厅按钮（判断处于奇域大厅）
 export const findBeyondHallBtn = () => {
   const img = "assets/UI_BtnIcon_Beyond_Hall.png";
-  const iro = findImageWithinBounds(img, 200, 0, 150, 100, { useMask: true, threshold: 0.8 });
+  const iro = findImageWithinBounds(img, 200, 0, 150, 100, { useMask: true, threshold: 0.75 });
   iro?.drawSelf("group_img");
   return iro;
 };
@@ -194,7 +194,7 @@ export const findGotTeyvatBtn = () => {
 //! 纪游：查找诸界纪游按钮
 export const findBeyondBattlepassBtn = () => {
   const img = "assets/UI_BtnIcon_Beyond_Battlepass.png";
-  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.8 });
+  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.75 });
   iro?.drawSelf("group_img");
   return iro;
 };
