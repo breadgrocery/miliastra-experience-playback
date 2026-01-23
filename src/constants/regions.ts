@@ -38,7 +38,13 @@ export const clickToContinue = () => {
 export const findUidText = () => {
   return findTextWithinBounds("UID", 1620, 1050, 300, 30, { contains: true });
 };
-
+//! 查找派蒙图标（判断处于奇域大世界/大厅）
+export const findPaimon = () => {
+  const img = "assets/UI_Icon_Paimon.png";
+  const iro = findImageWithinBounds(img, 0, 0, 100, 100, { useMask: true, threshold: 0.8 });
+  iro?.drawSelf("group_img");
+  return iro;
+};
 //! 查找元素视野按钮（判断处于大世界）
 export const findElementViewBtn = () => {
   const img = "assets/UI_BtnIcon_ElementView.png";

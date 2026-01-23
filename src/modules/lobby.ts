@@ -5,14 +5,15 @@ import {
   findConfirmBtn,
   findElementViewBtn,
   findGotTeyvatBtn,
-  findHeaderTitle
+  findHeaderTitle,
+  findPaimon
 } from "../constants/regions";
 
 //! 判断是否处于奇域大厅
-export const isInLobby = () => findBeyondHallBtn() !== undefined;
+export const isInLobby = () => findPaimon() !== undefined && findBeyondHallBtn() !== undefined;
 
 //! 判断是否处于提瓦特大陆
-const isInTeyvat = () => findElementViewBtn() !== undefined;
+const isInTeyvat = () => findPaimon() !== undefined && findElementViewBtn() !== undefined;
 
 //! 退出大厅返回提瓦特大陆
 export const exitLobbyToTeyvat = async () => {
