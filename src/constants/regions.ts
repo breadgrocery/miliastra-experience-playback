@@ -31,7 +31,7 @@ export const findCloseDialog = () => {
 };
 //! 通用：点击空白处区域继续位置
 export const clickToContinue = () => {
-  click(900, 1050);
+  click(960, 1070);
 };
 
 //! 查找UID文本
@@ -186,10 +186,6 @@ export const findStageEscBtn = () => {
 //! 关卡：查找中断挑战按钮
 export const findExitStageBtn = () => {
   return findTextWithinBounds("中断挑战", 576, 324, 768, 432);
-};
-//! 关卡：查找奇域等级提升页面
-export const findSkipLevelUpMsg = () => {
-  return findTextWithinBounds("空白处", 610, 950, 700, 60, { contains: true });
 };
 
 //! 退出：查找返回提瓦特按钮
