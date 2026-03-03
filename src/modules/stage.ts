@@ -22,8 +22,10 @@ export const playStage = async (playbacks: string[]) => {
   const ok = await waitForAction(
     () => findStageEscBtn() !== undefined || findBottomBtnText("返回大厅") !== undefined,
     async () => {
+      //! 关卡房间，点击 “开始游戏” 按钮
       findBottomBtnText("开始游戏")?.click();
-      findBottomBtnText("准备", true)?.click();
+      //! 「经典模式」关卡，点击 “开始挑战” 按钮
+      findBottomBtnText("开始挑战")?.click();
 
       //! 判断是否已经加入准备区
       if (findPrepareMsg()) {
