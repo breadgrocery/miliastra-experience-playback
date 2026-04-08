@@ -1,4 +1,4 @@
-import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
+import { assertRegionAppearing, sleepSync, waitForAction } from "@bettergi/utils";
 import {
   clickToChooseFirstSearchResult,
   findAllWonderlandsBtn,
@@ -78,6 +78,7 @@ const createRoom = async (room: string) => {
       //! 检测搜索过于频繁提示
       if (findSearchWonderlandThrottleMsg()) return true;
       //! 检测搜索结果是否变化
+      sleepSync(1000);
       return fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
     },
     async () => {

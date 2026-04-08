@@ -83,7 +83,7 @@ export const findSearchWonderlandThrottleMsg = () => {
 //! 房间：查找第一个奇域搜索结果名称
 export const findFirstSearchResultText = () => {
   const ir = captureGameRegion();
-  const ro = RecognitionObject.ocr(240, 390, 300, 50);
+  const ro = RecognitionObject.ocr(240, 475, 300, 50);
   return (() => {
     const list = ir.findMulti(ro);
     for (let i = 0; i < list.count; i++) {
@@ -95,7 +95,7 @@ export const findFirstSearchResultText = () => {
 };
 //! 房间：点击选择第一个搜索结果位置
 export const clickToChooseFirstSearchResult = () => {
-  click(330, 365);
+  click(265, 390);
 };
 //! 房间：查找进入房间快捷键按钮
 export const findEnterRoomShortcut = () => {
@@ -116,7 +116,7 @@ export const findGoToLobbyBtn = () => {
 };
 //! 房间：查找创建房间按钮
 export const findCreateRoomBtn = () => {
-  return findTextWithinBounds("房间", 960, 140, 960, 70, { contains: true });
+  return findTextWithinBounds("房间", 960, 95, 960, 70, { contains: true });
 };
 //! 房间：点击加入准备区位置
 export const clickToPrepare = () => {
