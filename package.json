@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@bettergi/cli": "^0.2.13",
-    "@bettergi/types": "^0.1.12",
+    "@bettergi/types": "^0.1.13",
     "@bettergi/utils": "^0.1.30",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",

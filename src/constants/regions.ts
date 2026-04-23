@@ -36,7 +36,7 @@ export const clickToContinue = () => {
 
 //! 查找UID文本
 export const findUidText = () => {
-  return findTextWithinBounds("UID", 1620, 1050, 300, 30, { contains: true });
+  return findTextWithinBounds("UID", 1580, 1050, 340, 30, { contains: true });
 };
 //! 查找派蒙图标（判断处于奇域大世界/大厅）
 export const findPaimon = () => {

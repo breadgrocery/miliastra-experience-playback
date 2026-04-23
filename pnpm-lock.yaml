@@ -11,8 +11,8 @@ importers:
         specifier: ^0.2.13
         version: 0.2.13
       "@bettergi/types":
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       "@bettergi/utils":
         specifier: ^0.1.30
         version: 0.1.30
@@ -116,10 +116,10 @@ packages:
       }
     hasBin: true
 
-  "@bettergi/types@0.1.12":
+  "@bettergi/types@0.1.13":
     resolution:
       {
-        integrity: sha512-lEI1AvyjaWzukXQvdWYrNVr4ajQa8tHXL5fT+x02aGepW64qYDVDelfdXFGwglrnTbWKrzhKH+e0UvnKybo7+g==
+        integrity: sha512-q/ocUQgQR3dyOx9aqx2XF7kWyuxNbR9UM17d3N+ylsUMazsCSt5ZUGXDcsJ3DTda+LCpUA9276qREx6BL3lfpA==
       }
 
   "@bettergi/utils@0.1.30":
@@ -2200,7 +2200,7 @@ snapshots:
 
   "@bettergi/cli@0.2.13":
     dependencies:
-      "@bettergi/types": 0.1.12
+      "@bettergi/types": 0.1.13
       "@rolldown/pluginutils": 1.0.0-rc.14
       c12: 3.3.4
       fs-extra: 11.3.4
@@ -2214,7 +2214,7 @@ snapshots:
       - encoding
       - magicast
 
-  "@bettergi/types@0.1.12":
+  "@bettergi/types@0.1.13":
     dependencies:
       mirada: 0.0.15
     transitivePeerDependencies:
@@ -2222,7 +2222,7 @@ snapshots:
 
   "@bettergi/utils@0.1.30":
     dependencies:
-      "@bettergi/types": 0.1.12
+      "@bettergi/types": 0.1.13
     transitivePeerDependencies:
       - encoding
 

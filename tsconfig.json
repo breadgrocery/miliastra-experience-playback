@@ -9,7 +9,6 @@
     "lib": ["ES2022"],
     "skipLibCheck": true,
     "strict": true,
-    "alwaysStrict": false,
     "removeComments": false,
     "noEmitOnError": true,
     "types": ["@bettergi/types", "@bettergi/cli/loaders"]
