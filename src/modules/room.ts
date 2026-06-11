@@ -58,7 +58,7 @@ const createRoom = async (room: string) => {
     wi += 1;
   }
   if (iwnt === undefined) throw new Error("奇域列表加载超时");
-  log.info("搜索前的第一个奇域名称: {iwnt}", iwnt);
+  log.info("搜索前的首个奇域关卡名称: {iwnt}", iwnt);
 
   log.info("粘贴奇域关卡文本: {room}", room);
   await assertRegionAppearing(findClearInputBtn, "粘贴关卡文本超时", () => {
@@ -76,10 +76,17 @@ const createRoom = async (room: string) => {
     () => {
       if (fswnt === undefined) return false;
       /** 检测搜索过于频繁提示 */
-      if (findSearchWonderlandThrottleMsg()) return true;
+      if (findSearchWonderlandThrottleMsg()) {
+        log.info("发现搜索过于频繁提示，搜索完成");
+        return true;
+      }
       /** 检测搜索结果是否变化 */
       sleepSync(1000);
-      return fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
+      const isChanged = fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
+      if (isChanged) {
+        log.info("首个奇域关卡名称已变化: {fswnt}，搜索完成", fswnt);
+      }
+      return isChanged;
     },
     async () => {
       const searchBtn = findSearchWonderlandBtn();

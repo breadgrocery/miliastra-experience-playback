@@ -204,7 +204,7 @@ export const findBeyondBattlepassBtn = () => {
 export const findBeyondBattlepassPopup = () => {
   return findTextWithinBounds("奖励一览", 0, 0, 960, 1080, { contains: true });
 };
-/** 纪游：查找领取奖励按钮 */
+/** 奖励：查找领取奖励按钮 */
 export const findFetchRewardBtn = () => {
   const img = "assets/UI_Img_UGCCultivateReward_FetchHint.png";
   const iro = findImageWithinBounds(img, 1550, 100, 370, 880, {

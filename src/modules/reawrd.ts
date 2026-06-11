@@ -84,6 +84,35 @@ const clickClaimRewardBtn = async () => {
   }
 };
 
+/** 领取星境彩馈奖励 */
+const fetchMiliastralGifts = async () => {
+  /** 打开星境彩馈 */
+  await assertRegionAppearing(
+    () => findHeaderTitle("星境", true) || findHeaderTitle("彩馈", true),
+    "打开星境彩馈超时，活动未轮换/已结束",
+    async () => {
+      keyPress("VK_F6");
+      await sleep(2000);
+      if (!findHeaderTitle("星境", true) && !findHeaderTitle("彩馈", true)) {
+        keyPress("VK_Q");
+      }
+    },
+    { maxAttempts: 5, retryInterval: 1000 }
+  );
+
+  /** 领取星境彩馈奖励 */
+  await assertRegionDisappearing(
+    findFetchRewardBtn,
+    "领取星境彩馈奖励超时",
+    async () => {
+      await clickClaimRewardBtn();
+    },
+    { maxAttempts: 5, retryInterval: 2000 }
+  );
+
+  await genshin.returnMainUi();
+};
+
 /** 领取绮衣珍赏奖励 */
 const fetchRaimentCollection = async () => {
   /** 打开绮衣珍赏 */
@@ -155,6 +184,13 @@ export const fetchCultivateReward = async () => {
     await fetchRaimentCollection();
   } catch (err) {
     log.warn(`尝试领取绮衣珍赏奖励失败: ${getErrorMessage(err)}`);
+  }
+
+  try {
+    log.info("尝试领取星境彩馈奖励...");
+    await fetchMiliastralGifts();
+  } catch (err) {
+    log.warn(`尝试领取星境彩馈奖励失败: ${getErrorMessage(err)}`);
   }
 
   try {
