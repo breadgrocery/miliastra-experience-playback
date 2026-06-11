@@ -1,4 +1,4 @@
-import { assertRegionAppearing, assertRegionDisappearing, getErrorMessage } from "@bettergi/utils";
+﻿import { assertRegionAppearing, assertRegionDisappearing, getErrorMessage } from "@bettergi/utils";
 import {
   clickToContinue,
   findBeyondBattlepassBtn,
@@ -9,9 +9,9 @@ import {
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
 
-//! 领取诸界纪游经验
+/** 领取诸界纪游经验 */
 export const fetchBattlepassExp = async () => {
-  //! 确保处于大厅内
+  /** 确保处于大厅内 */
   if (!isInLobby()) {
     log.warn("不在奇域大厅内，跳过领取诸界纪游经验");
     return;
@@ -22,14 +22,14 @@ export const fetchBattlepassExp = async () => {
     return;
   }
 
-  //! 打开诸界纪游界面
+  /** 打开诸界纪游界面 */
   await assertRegionAppearing(
     () => findHeaderTitle("纪游", true),
     "打开诸界纪游界面超时",
     () => {
       keyPress("VK_F4");
 
-      //! 关闭纪游开屏动画（如果弹出）
+      /** 关闭纪游开屏动画（如果弹出） */
       if (findBeyondBattlepassPopup()) {
         keyPress("VK_ESCAPE");
       }
@@ -37,7 +37,7 @@ export const fetchBattlepassExp = async () => {
     { maxAttempts: 5, retryInterval: 2000 }
   );
 
-  //! 跳转到任务界面
+  /** 跳转到任务界面 */
   await assertRegionAppearing(
     () => findHeaderTitle("任务", true),
     "打开诸界纪游任务界面超时",
@@ -47,12 +47,12 @@ export const fetchBattlepassExp = async () => {
     { maxAttempts: 5, retryInterval: 2000 }
   );
 
-  //! 点击一键领取
+  /** 点击一键领取 */
   await assertRegionDisappearing(
     () => findBottomBtnText("领取", true),
     "领取诸界纪游经验超时",
     async () => {
-      //! 重复确认，防止误领纪游奖励（部件礼箱会卡流程）而不是经验
+      /** 重复确认，防止误领纪游奖励（部件礼箱会卡流程）而不是经验 */
       if (findHeaderTitle("任务", true)) {
         const reward = findBottomBtnText("领取", true);
         if (reward) {
@@ -71,7 +71,7 @@ export const fetchBattlepassExp = async () => {
   await genshin.returnMainUi();
 };
 
-//! 点击领取奖励按钮
+/** 点击领取奖励按钮 */
 const clickClaimRewardBtn = async () => {
   const reward = findFetchRewardBtn();
   if (reward) {
@@ -84,9 +84,9 @@ const clickClaimRewardBtn = async () => {
   }
 };
 
-//! 领取绮衣珍赏奖励
+/** 领取绮衣珍赏奖励 */
 const fetchRaimentCollection = async () => {
-  //! 打开绮衣珍赏
+  /** 打开绮衣珍赏 */
   await assertRegionAppearing(
     () => findHeaderTitle("绮衣", true) || findHeaderTitle("珍赏", true),
     "打开绮衣珍赏超时，活动未轮换/已结束",
@@ -100,7 +100,7 @@ const fetchRaimentCollection = async () => {
     { maxAttempts: 5, retryInterval: 1000 }
   );
 
-  //! 领取绮衣珍赏奖励
+  /** 领取绮衣珍赏奖励 */
   await assertRegionDisappearing(
     findFetchRewardBtn,
     "领取绮衣珍赏奖励超时",
@@ -113,9 +113,9 @@ const fetchRaimentCollection = async () => {
   await genshin.returnMainUi();
 };
 
-//! 领取奇趣盛邀奖励
+/** 领取奇趣盛邀奖励 */
 const fetchInvitationToWonderland = async () => {
-  //! 打开奇趣盛邀
+  /** 打开奇趣盛邀 */
   await assertRegionAppearing(
     () => findHeaderTitle("盛邀", true),
     "打开奇趣盛邀超时，活动未轮换/已结束",
@@ -129,7 +129,7 @@ const fetchInvitationToWonderland = async () => {
     { maxAttempts: 5, retryInterval: 1000 }
   );
 
-  //! 领取妙思觅索奖励
+  /** 领取妙思觅索奖励 */
   await assertRegionDisappearing(
     findFetchRewardBtn,
     "领取妙思觅索奖励超时",
@@ -142,9 +142,9 @@ const fetchInvitationToWonderland = async () => {
   await genshin.returnMainUi();
 };
 
-//! 领取日活奖励
+/** 领取日活奖励 */
 export const fetchCultivateReward = async () => {
-  //! 确保处于大厅内
+  /** 确保处于大厅内 */
   if (!isInLobby()) {
     log.warn("不在奇域大厅内，跳过领取日活奖励");
     return;

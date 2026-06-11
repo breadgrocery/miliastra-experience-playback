@@ -1,4 +1,4 @@
-import { assertRegionAppearing, assertRegionDisappearing, waitForAction } from "@bettergi/utils";
+﻿import { assertRegionAppearing, assertRegionDisappearing, waitForAction } from "@bettergi/utils";
 import { userConfig } from "../constants/config";
 import {
   clickToContinue,
@@ -12,22 +12,22 @@ import {
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
 
-//! 已有的执行通关回放文件列表
+/** 已有的执行通关回放文件列表 */
 export const availablePlaybackFiles = () => {
   return [...file.readPathSync("assets/playbacks")].map(path => path.replace(/\\/g, "/"));
 };
 
 export const playStage = async (playbacks: string[]) => {
-  //! 等待进入关卡
+  /** 等待进入关卡 */
   const ok = await waitForAction(
     () => findStageEscBtn() !== undefined || findBottomBtnText("返回大厅") !== undefined,
     async () => {
-      //! 关卡房间，点击 “开始游戏” 按钮
+      /** 关卡房间，点击 “开始游戏” 按钮 */
       findBottomBtnText("开始游戏")?.click();
-      //! 「经典模式」关卡，点击 “开始挑战” 按钮
+      /** 「经典模式」关卡，点击 “开始挑战” 按钮 */
       findBottomBtnText("开始挑战")?.click();
 
-      //! 判断是否已经加入准备区
+      /** 判断是否已经加入准备区 */
       if (findPrepareMsg()) {
         log.info("加入准备区...");
         await assertRegionDisappearing(findPrepareMsg, "等待加入准备区提示消失超时");
@@ -38,13 +38,13 @@ export const playStage = async (playbacks: string[]) => {
   );
   if (!ok) throw new Error("进入关卡超时");
 
-  //! 直接通关结算的关卡（不会进入关卡）
+  /** 直接通关结算的关卡（不会进入关卡） */
   if (findBottomBtnText("返回大厅")) {
     await exitStageToLobby();
     return;
   }
 
-  //! 关闭游戏说明对话框
+  /** 关闭游戏说明对话框 */
   if (userConfig.closeStageDialog) {
     await assertRegionDisappearing(
       findCloseDialog,
@@ -56,22 +56,22 @@ export const playStage = async (playbacks: string[]) => {
     );
   }
 
-  //! 执行随机通关回放文件
+  /** 执行随机通关回放文件 */
   await execStagePlayback(playbacks);
   await sleep(3000);
 
-  //! 退出关卡返回大厅
+  /** 退出关卡返回大厅 */
   await exitStageToLobby();
 };
 
-//! 执行通关回放文件（随机抽取）
+/** 执行通关回放文件（随机抽取） */
 const execStagePlayback = async (playbacks: string[]) => {
   const file = playbacks[Math.floor(Math.random() * playbacks.length)];
   log.info("执行通关回放文件: {file}", file);
   await keyMouseScript.runFile(file);
 };
 
-//! 退出关卡
+/** 退出关卡 */
 export const exitStage = async () => {
   if (findStageEscBtn() === undefined) return;
 
@@ -89,9 +89,9 @@ export const exitStage = async () => {
     findBeyondHallBtn,
     "返回大厅超时",
     async () => {
-      //! 点击 “中断挑战” 按钮
+      /** 点击 “中断挑战” 按钮 */
       findExitStageBtn()?.click();
-      //! 点击底部 “返回大厅” 按钮
+      /** 点击底部 “返回大厅” 按钮 */
       findBottomBtnText("返回大厅")?.click();
     },
     { maxAttempts: 60 }
@@ -100,7 +100,7 @@ export const exitStage = async () => {
   await genshin.returnMainUi();
 };
 
-//! 退出关卡返回大厅
+/** 退出关卡返回大厅 */
 const exitStageToLobby = async () => {
   if (isInLobby()) {
     log.warn("已处于奇域大厅，跳过");
@@ -111,10 +111,10 @@ const exitStageToLobby = async () => {
   const done = await waitForAction(
     isInLobby,
     async () => {
-      //! 跳过奇域等级提升页面（奇域等级每逢11、21、31、41级时出现加星页面）
+      /** 跳过奇域等级提升页面（奇域等级每逢11、21、31、41级时出现加星页面） */
       clickToContinue();
 
-      //! 点击底部 “返回大厅” 按钮
+      /** 点击底部 “返回大厅” 按钮 */
       findBottomBtnText("返回大厅")?.click();
     },
     { maxAttempts: 60 }

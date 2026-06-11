@@ -1,9 +1,9 @@
-import { getNextDay4AM, getNextMonday4AM, useStoreWithDefaults } from "@bettergi/utils";
+﻿import { getNextDay4AM, getNextMonday4AM, useStoreWithDefaults } from "@bettergi/utils";
 import { findUidText } from "./regions";
 
-//! 脚本数据存储
+/** 脚本数据存储 */
 export const store = (() => {
-  // !识别UID
+  /** 识别UID */
   const uid = findUidText()?.text.replace(/\D/g, "");
   if (!uid) throw new Error("创建用户数据存储失败: 无法识别UID");
 

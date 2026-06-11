@@ -1,4 +1,4 @@
-import { assertRegionAppearing, sleepSync, waitForAction } from "@bettergi/utils";
+﻿import { assertRegionAppearing, sleepSync, waitForAction } from "@bettergi/utils";
 import {
   clickToChooseFirstSearchResult,
   findAllWonderlandsBtn,
@@ -19,7 +19,7 @@ import { isInLobby } from "./lobby";
 
 const isInRoom = () => findHeaderTitle("房间", true) !== undefined;
 
-//! 打开人气奇域
+/** 打开人气奇域 */
 export const goToRecommendedWonderlands = async () => {
   log.info("打开人气奇域界面...");
   await assertRegionAppearing(
@@ -31,7 +31,7 @@ export const goToRecommendedWonderlands = async () => {
   );
 };
 
-//! 创建并进入奇域房间
+/** 创建并进入奇域房间 */
 const createRoom = async (room: string) => {
   await goToRecommendedWonderlands();
 
@@ -44,11 +44,11 @@ const createRoom = async (room: string) => {
     }
   );
 
-  //! 减少网络影响带来的影响
+  /** 减少网络影响带来的影响 */
   log.info("等待奇域列表加载完成...");
   await sleep(1500);
 
-  //! 记录搜索前的第一个奇域名称
+  /** 记录搜索前的第一个奇域名称 */
   let iwnt: string | undefined;
   let wi = 0;
   while (iwnt === undefined) {
@@ -69,15 +69,15 @@ const createRoom = async (room: string) => {
     }
   });
 
-  //! 等待搜索结果变化
+  /** 等待搜索结果变化 */
   let fswnt: string | undefined;
   log.info("搜索奇域关卡: {room}", room);
   await waitForAction(
     () => {
       if (fswnt === undefined) return false;
-      //! 检测搜索过于频繁提示
+      /** 检测搜索过于频繁提示 */
       if (findSearchWonderlandThrottleMsg()) return true;
-      //! 检测搜索结果是否变化
+      /** 检测搜索结果是否变化 */
       sleepSync(1000);
       return fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
     },
@@ -122,7 +122,7 @@ const createRoom = async (room: string) => {
   );
 };
 
-//! 进入奇域房间
+/** 进入奇域房间 */
 export const enterRoom = async (room: string) => {
   const inLobby = isInLobby();
   if (inLobby) {
@@ -143,12 +143,12 @@ export const enterRoom = async (room: string) => {
   await createRoom(room);
 };
 
-//! 离开房间
+/** 离开房间 */
 export const leaveRoom = async () => {
-  //! 当前在大厅，且存在房间
+  /** 当前在大厅，且存在房间 */
   if ((isInLobby() && findEnterRoomShortcut() !== undefined) || isInRoom()) {
     log.info("当前存在房间，离开房间...");
-    //! 先进入房间
+    /** 先进入房间 */
     await assertRegionAppearing(
       () => findHeaderTitle("房间", true),
       "进入房间超时",
@@ -156,7 +156,7 @@ export const leaveRoom = async () => {
         keyPress("VK_P");
       }
     );
-    //! 离开房间
+    /** 离开房间 */
     await assertRegionAppearing(
       findBeyondHallBtn,
       "离开房间超时",

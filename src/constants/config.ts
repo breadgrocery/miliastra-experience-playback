@@ -1,6 +1,6 @@
-//! 用户脚本设置
+﻿/** 用户脚本设置 */
 export const userConfig = {
-  //! 每周任务相关设置
+  /** 每周任务相关设置 */
   room: settings.room || "20031486040",
   playbacks: (settings.playbacks || "美景音乐播放器结算.json")
     .replace(/，/g, ",")
@@ -13,7 +13,7 @@ export const userConfig = {
   expWeeklyLimit: Math.max(1, Number(settings.expWeeklyLimit || "4000")),
   force: settings.force ?? false,
   thisAttempts: Math.max(0, Number(settings.thisAttempts || "0")),
-  //! 每日任务相关设置
+  /** 每日任务相关设置 */
   dailyEnabled: settings.dailyEnabled ?? false,
   dailyRooms: (settings.dailyRooms || "24429042323,28644538672")
     .replace(/，/g, ",")
