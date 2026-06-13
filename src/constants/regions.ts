@@ -176,6 +176,11 @@ export const findDeleteStageSaveBtn = () => {
   return findTextWithinBounds("删除所选", 1220, 980, 700, 100);
 };
 
+/** 关卡：查找结算跳过按钮 */
+export const findSkipBtn = () => {
+  return findTextWithinBounds("跳过", 1720, 0, 200, 100, { contains: true });
+};
+
 /** 关卡：查找关卡退出按钮 */
 export const findStageEscBtn = () => {
   const img = "assets/UI_Icon_Leave.png";
@@ -185,7 +190,7 @@ export const findStageEscBtn = () => {
 };
 /** 关卡：查找中断挑战按钮 */
 export const findExitStageBtn = () => {
-  return findTextWithinBounds("中断挑战", 576, 324, 768, 432);
+  return findTextWithinBounds("中断挑战", 576, 324, 768, 432, { contains: true });
 };
 
 /** 退出：查找返回提瓦特按钮 */

@@ -1,4 +1,5 @@
 ﻿import { assertRegionAppearing, assertRegionDisappearing, getErrorMessage } from "@bettergi/utils";
+import { userConfig } from "../constants/config";
 import {
   clickToContinue,
   findBeyondBattlepassBtn,
@@ -11,6 +12,11 @@ import { isInLobby } from "./lobby";
 
 /** 领取诸界纪游经验 */
 export const fetchBattlepassExp = async () => {
+  if (!userConfig.dailyRewards.includes("诸界纪游")) {
+    log.warn("跳过领取诸界纪游经验");
+    return;
+  }
+
   /** 确保处于大厅内 */
   if (!isInLobby()) {
     log.warn("不在奇域大厅内，跳过领取诸界纪游经验");
@@ -179,24 +185,25 @@ export const fetchCultivateReward = async () => {
     return;
   }
 
-  try {
-    log.info("尝试领取绮衣珍赏奖励...");
-    await fetchRaimentCollection();
-  } catch (err) {
-    log.warn(`尝试领取绮衣珍赏奖励失败: ${getErrorMessage(err)}`);
+  const rewards = Object.entries({
+    "绮衣珍赏": fetchRaimentCollection,
+    "奇趣盛邀": fetchInvitationToWonderland,
+    "星境彩馈": fetchMiliastralGifts
+  }).filter(([key]) => userConfig.dailyRewards.includes(key));
+
+  if (rewards.length === 0) {
+    log.warn("未配置领取日活奖励，跳过领取日活奖励");
+    return;
   }
 
-  try {
-    log.info("尝试领取星境彩馈奖励...");
-    await fetchMiliastralGifts();
-  } catch (err) {
-    log.warn(`尝试领取星境彩馈奖励失败: ${getErrorMessage(err)}`);
-  }
-
-  try {
-    log.info("尝试领取奇趣盛邀奖励...");
-    await fetchInvitationToWonderland();
-  } catch (err) {
-    log.warn(`尝试领取奇趣盛邀奖励失败: ${getErrorMessage(err)}`);
+  for (const [reward, fetchRewardFunc] of rewards) {
+    try {
+      log.info(`尝试领取${reward}奖励...`);
+      await fetchRewardFunc();
+    } catch (err) {
+      log.warn(`尝试领取${reward}奖励失败: ${getErrorMessage(err)}`);
+    } finally {
+      await genshin.returnMainUi();
+    }
   }
 };
