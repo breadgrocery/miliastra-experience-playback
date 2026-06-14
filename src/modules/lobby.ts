@@ -1,16 +1,16 @@
 ﻿import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
 import { userConfig } from "../constants/config";
 import {
-  findBeyondHallBtn,
   findConfirmBtn,
   findElementViewBtn,
   findGotTeyvatBtn,
   findHeaderTitle,
+  findMiliastraBtn,
   findPaimon
 } from "../constants/regions";
 
 /** 判断是否处于奇域大厅 */
-export const isInLobby = () => findPaimon() !== undefined && findBeyondHallBtn() !== undefined;
+export const isInLobby = () => findPaimon() !== undefined && findMiliastraBtn() !== undefined;
 
 /** 判断是否处于提瓦特大陆 */
 const isInTeyvat = () => findPaimon() !== undefined && findElementViewBtn() !== undefined;

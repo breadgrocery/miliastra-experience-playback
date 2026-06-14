@@ -3,7 +3,6 @@ import { userConfig } from "../constants/config";
 import {
   clickToContinue,
   clickToPrepare,
-  findBeyondHallBtn,
   findBottomBtnText,
   findCloseDialog,
   findExitStageBtn,
@@ -86,9 +85,8 @@ export const exitStage = async () => {
     { maxAttempts: 10, retryInterval: 1000 }
   );
 
-  await assertRegionAppearing(
-    findBeyondHallBtn,
-    "返回大厅超时",
+  const ok = await waitForAction(
+    isInLobby,
     async () => {
       /** 点击 “中断挑战” 按钮 */
       findExitStageBtn()?.click();
@@ -97,6 +95,7 @@ export const exitStage = async () => {
     },
     { maxAttempts: 60 }
   );
+  if (!ok) throw new Error("返回大厅超时");
 
   await genshin.returnMainUi();
 };

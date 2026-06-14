@@ -2,7 +2,6 @@
 import {
   clickToChooseFirstSearchResult,
   findAllWonderlandsBtn,
-  findBeyondHallBtn,
   findClearInputBtn,
   findConfirmBtn,
   findCreateRoomBtn,
@@ -164,9 +163,8 @@ export const leaveRoom = async () => {
       }
     );
     /** 离开房间 */
-    await assertRegionAppearing(
-      findBeyondHallBtn,
-      "离开房间超时",
+    const ok = await waitForAction(
+      isInLobby,
       async () => {
         findLeaveRoomBtn()?.click();
         await sleep(1000);
@@ -174,5 +172,6 @@ export const leaveRoom = async () => {
       },
       { maxAttempts: 5 }
     );
+    if (!ok) throw new Error("离开房间超时");
   }
 };
