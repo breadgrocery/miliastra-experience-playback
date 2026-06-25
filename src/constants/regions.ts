@@ -124,7 +124,7 @@ export const clickToPrepare = () => {
 };
 /** 房间：查找加入准备区提示 */
 export const findPrepareMsg = () => {
-  return findTextWithinBounds("加入准备", 576, 432, 768, 216, {
+  return findTextWithinBounds("准备", 576, 432, 768, 216, {
     contains: true
   });
 };
