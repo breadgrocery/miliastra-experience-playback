@@ -16,6 +16,12 @@ export const findHeaderTitle = (title: string, contains?: boolean) => {
   txt?.drawSelf("group_text");
   return txt;
 };
+/** 通用：查找提示文字 */
+export const findPromptText = (text: string, contains: boolean = true) => {
+  const txt = findTextWithinBounds(text, 576, 432, 768, 216, { contains });
+  txt?.drawSelf("group_text");
+  return txt;
+};
 /** 通用：查找底部按钮文字 */
 export const findBottomBtnText = (text: string, contains?: boolean) => {
   const txt = findTextWithinBounds(text, 0, 980, 1920, 100, { contains });
@@ -122,11 +128,16 @@ export const findCreateRoomBtn = () => {
 export const clickToPrepare = () => {
   click(770, 275);
 };
-/** 房间：查找加入准备区提示 */
-export const findPrepareMsg = () => {
-  return findTextWithinBounds("准备", 576, 432, 768, 216, {
-    contains: true
-  });
+/** 房间：查找编队过滤器按钮 */
+export const findSetupFilterBtn = () => {
+  const img = "assets/UI_Icon_Setup_Filter.png";
+  const iro = findImageWithinBounds(img, 0, 0, 90, 80, { threshold: 0.8 });
+  iro?.drawSelf("group_img");
+  return iro;
+};
+/** 房间：点击选择第一位角色位置 */
+export const clickToChooseFirstCharacter = () => {
+  click(100, 195);
 };
 
 /** 存档：查找奇域收藏 */
