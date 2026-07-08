@@ -2,6 +2,12 @@ import { type ExtractSettingsMap, defineSettings } from "@bettergi/cli";
 
 const settings = defineSettings([
   {
+    type: "checkbox",
+    name: "weeklyEnabled",
+    label: "执行每周通关任务",
+    default: true
+  },
+  {
     type: "input-text",
     name: "room",
     label: "每周奇域关卡关键词或关卡GUID",
@@ -50,13 +56,13 @@ const settings = defineSettings([
     default: "0"
   },
   {
+    type: "separator"
+  },
+  {
     type: "checkbox",
     name: "dailyEnabled",
     label: "执行每日通关任务",
     default: false
-  },
-  {
-    type: "separator"
   },
   {
     type: "input-text",
