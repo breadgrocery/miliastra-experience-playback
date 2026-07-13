@@ -82,10 +82,6 @@ export const findClearInputBtn = () => {
 export const findSearchWonderlandBtn = () => {
   return findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
 };
-/** 房间：查找搜索过于频繁提示 */
-export const findSearchWonderlandThrottleMsg = () => {
-  return findTextWithinBounds("过于频繁", 0, 0, 1920, 300, { contains: true });
-};
 /** 房间：查找第一个奇域搜索结果名称 */
 export const findFirstSearchResultText = () => {
   const ir = captureGameRegion();
@@ -94,7 +90,11 @@ export const findFirstSearchResultText = () => {
     const list = ir.findMulti(ro);
     for (let i = 0; i < list.count; i++) {
       if (list[i] && list[i].isExist()) {
-        return list[i].text;
+        const text = list[i].text.trim();
+        if (text) {
+          list[i].drawSelf("group_text");
+          return text;
+        }
       }
     }
   })();

@@ -1,4 +1,4 @@
-﻿import { assertRegionAppearing, sleepSync, waitForAction } from "@bettergi/utils";
+﻿import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
 import {
   clickToChooseFirstSearchResult,
   findAllWonderlandsBtn,
@@ -11,8 +11,7 @@ import {
   findHeaderTitle,
   findLeaveRoomBtn,
   findSearchWonderlandBtn,
-  findSearchWonderlandInput,
-  findSearchWonderlandThrottleMsg
+  findSearchWonderlandInput
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
 
@@ -43,19 +42,15 @@ const createRoom = async (room: string) => {
     }
   );
 
-  /** 减少网络影响带来的影响 */
-  log.info("等待奇域列表加载完成...");
-  await sleep(1500);
-
-  /** 记录搜索前的第一个奇域名称 */
-  let iwnt: string | undefined;
-  let wi = 0;
-  while (iwnt === undefined) {
-    if (wi > 20) break;
-    iwnt = findFirstSearchResultText();
-    await sleep(500);
-    wi += 1;
-  }
+  /** 帮助函数：获取第一个奇域名称 */
+  const firstWonderlandName = async (maxAttempts: number = 5, retryInterval: number = 2000) => {
+    for (let i = 0; i < maxAttempts; i++) {
+      await sleep(retryInterval);
+      const text = findFirstSearchResultText();
+      if (text) return text;
+    }
+  };
+  const iwnt = await firstWonderlandName();
   if (iwnt === undefined) throw new Error("奇域列表加载超时");
   log.info("搜索前的首个奇域关卡名称: {iwnt}", iwnt);
 
@@ -69,21 +64,14 @@ const createRoom = async (room: string) => {
   });
 
   /** 等待搜索结果变化 */
-  let fswnt: string | undefined;
+  let lwnt: string | undefined;
   log.info("搜索奇域关卡: {room}", room);
   await waitForAction(
     () => {
-      if (fswnt === undefined) return false;
-      /** 检测搜索过于频繁提示 */
-      if (findSearchWonderlandThrottleMsg()) {
-        log.info("发现搜索过于频繁提示，搜索完成");
-        return true;
-      }
-      /** 检测搜索结果是否变化 */
-      sleepSync(1000);
-      const isChanged = fswnt.toLocaleLowerCase().trim() !== iwnt.toLocaleLowerCase().trim();
+      if (lwnt === undefined) return false;
+      const isChanged = lwnt.toLowerCase().trim() !== iwnt.toLowerCase().trim();
       if (isChanged) {
-        log.info("首个奇域关卡名称已变化: {fswnt}，搜索完成", fswnt);
+        log.info("首个奇域关卡名称已变化: {lwnt}，搜索完成", lwnt);
       }
       return isChanged;
     },
@@ -91,13 +79,10 @@ const createRoom = async (room: string) => {
       const searchBtn = findSearchWonderlandBtn();
       if (searchBtn) {
         searchBtn.click();
-        await sleep(200);
-        searchBtn.click();
+        lwnt = await firstWonderlandName();
       }
-      await sleep(500);
-      fswnt = findFirstSearchResultText();
     },
-    { maxAttempts: 30, retryInterval: 200 }
+    { maxAttempts: 10, retryInterval: 1000 }
   );
 
   log.info("打开奇域介绍...");
