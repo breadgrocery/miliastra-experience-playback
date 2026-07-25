@@ -12,8 +12,10 @@ import { isInLobby } from "./lobby";
 
 /** 领取诸界纪游经验 */
 export const fetchBattlepassExp = async () => {
+  log.info(`尝试领取诸界纪游经验...`);
+
   if (!userConfig.dailyRewards.includes("诸界纪游")) {
-    log.warn("跳过领取诸界纪游经验");
+    log.warn("未配置领取诸界纪游奖励，跳过领取诸界纪游经验");
     return;
   }
 
