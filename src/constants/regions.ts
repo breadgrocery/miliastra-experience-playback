@@ -82,22 +82,28 @@ export const findClearInputBtn = () => {
 export const findSearchWonderlandBtn = () => {
   return findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
 };
-/** 房间：查找第一个奇域搜索结果名称 */
-export const findFirstSearchResultText = () => {
+/** 房间：查找首行前N个奇域搜索结果名称 */
+export const findTopNSearchResultTexts = (n: number) => {
+  const boundsN = (n: number) => [240 + n * 360, 475, 300, 50] as const;
   const ir = captureGameRegion();
-  const ro = RecognitionObject.ocr(240, 475, 300, 50);
-  return (() => {
-    const list = ir.findMulti(ro);
-    for (let i = 0; i < list.count; i++) {
-      if (list[i] && list[i].isExist()) {
-        const text = list[i].text.trim();
-        if (text) {
-          list[i].drawSelf("group_text");
-          return text;
+  return [...Array(n).keys()]
+    .reverse()
+    .map(i => {
+      return (() => {
+        const ro = RecognitionObject.ocr(...boundsN(i));
+        const list = ir.findMulti(ro);
+        for (let i = 0; i < list.count; i++) {
+          if (list[i] && list[i].isExist()) {
+            const text = list[i].text.trim();
+            if (text) {
+              list[i].drawSelf("group_text");
+              return text;
+            }
+          }
         }
-      }
-    }
-  })();
+      })();
+    })
+    .reverse();
 };
 /** 房间：点击选择第一个搜索结果位置 */
 export const clickToChooseFirstSearchResult = () => {
