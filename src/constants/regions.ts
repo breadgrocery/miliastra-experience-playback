@@ -42,7 +42,9 @@ export const clickToContinue = () => {
 
 /** 查找UID文本 */
 export const findUidText = () => {
-  return findTextWithinBounds("UID", 1580, 1050, 340, 30, { contains: true });
+  const txt = findTextWithinBounds("UID", 1580, 1050, 340, 30, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 /** 查找派蒙图标（判断处于奇域大世界/大厅） */
 export const findPaimon = () => {
@@ -72,7 +74,9 @@ export const findAllWonderlandsBtn = () => {
 };
 /** 房间：查找奇域搜索输入框 */
 export const findSearchWonderlandInput = () => {
-  return findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
+  const txt = findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 /** 房间：查找奇域搜索输入框清除按钮 */
 export const findClearInputBtn = () => {
@@ -111,7 +115,9 @@ export const clickToChooseFirstSearchResult = () => {
 };
 /** 房间：查找进入房间快捷键按钮 */
 export const findEnterRoomShortcut = () => {
-  return findTextWithinBounds("房间", 1580, 110, 320, 390, { contains: true });
+  const txt = findTextWithinBounds("房间", 1580, 110, 320, 390, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 /** 房间：查找退出房间按钮 */
 export const findLeaveRoomBtn = () => {
@@ -122,13 +128,13 @@ export const findLeaveRoomBtn = () => {
 };
 /** 房间：查找跳转大厅按钮 */
 export const findGoToLobbyBtn = () => {
-  return findTextWithinBounds("大厅", 880, 840, 1040, 110, {
-    contains: true
-  });
+  return findTextWithinBounds("大厅", 880, 840, 1040, 110, { contains: true });
 };
 /** 房间：查找创建房间按钮 */
 export const findCreateRoomBtn = () => {
-  return findTextWithinBounds("房间", 960, 95, 960, 70, { contains: true });
+  const txt = findTextWithinBounds("房间", 960, 95, 960, 70, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 /** 房间：点击加入准备区位置 */
 export const clickToPrepare = () => {
@@ -148,9 +154,7 @@ export const clickToChooseFirstCharacter = () => {
 
 /** 存档：查找奇域收藏 */
 export const findBeyondFavoritesBtn = () => {
-  return findTextWithinBounds("收藏", 0, 880, 200, 200, {
-    contains: true
-  });
+  return findTextWithinBounds("收藏", 0, 880, 200, 200, { contains: true });
 };
 /** 存档：查找管理关卡按钮 */
 export const findManageStagesBtn = () => {
@@ -164,19 +168,14 @@ export const findEditStageSaveBtn = () => {
 export const findSaveToDeletePos = (keyword: string) =>
   findTextWithinListView(
     keyword,
-    {
-      x: 210,
-      y: 250,
-      w: 1650,
-      h: 710,
-      scrollLines: 7,
-      lineHeight: 95
-    },
+    { x: 210, y: 250, w: 1650, h: 710, scrollLines: 7, lineHeight: 95 },
     { contains: true }
   );
 /** 存档：查找局外存档列头 */
 export const findExternalSaveColumnPos = () => {
-  return findTextWithinBounds("局外", 55, 190, 1810, 50, { contains: true });
+  const txt = findTextWithinBounds("局外", 55, 190, 1810, 50, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 /** 存档：查找删除局外存档复选框已选中状态 */
 export const findDeleteExternalSaveChecked = (colPos: number) => {
@@ -195,9 +194,10 @@ export const findDeleteStageSaveBtn = () => {
 
 /** 关卡：查找结算跳过按钮 */
 export const findSkipBtn = () => {
-  return findTextWithinBounds("跳过", 1720, 0, 200, 100, { contains: true });
+  const txt = findTextWithinBounds("跳过", 1720, 0, 200, 100, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
-
 /** 关卡：查找关卡退出按钮 */
 export const findStageEscBtn = () => {
   const img = "assets/UI_Icon_Leave.png";
@@ -212,7 +212,9 @@ export const findExitStageBtn = () => {
 
 /** 退出：查找返回提瓦特按钮 */
 export const findGotTeyvatBtn = () => {
-  return findTextWithinBounds("返回", 1500, 0, 300, 95, { contains: true });
+  const txt = findTextWithinBounds("返回", 1500, 0, 300, 95, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
 };
 
 /** 纪游：查找诸界纪游按钮 */
