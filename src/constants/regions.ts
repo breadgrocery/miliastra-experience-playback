@@ -40,12 +40,6 @@ export const clickToContinue = () => {
   click(960, 1070);
 };
 
-/** 查找UID文本 */
-export const findUidText = () => {
-  const txt = findTextWithinBounds("UID", 1580, 1050, 340, 30, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
-};
 /** 查找派蒙图标（判断处于奇域大世界/大厅） */
 export const findPaimon = () => {
   const img = "assets/UI_Icon_Paimon.png";
