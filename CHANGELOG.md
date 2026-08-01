@@ -1,7 +1,5 @@
 # 更新日志
 
-本文件记录 [千星奇域·经验刷取(回放通关版)](https://github.com/breadgrocery/miliastra-experience-playback) 的版本变更。
-
 ## [0.1.24](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.24)
 
 - 无法识别 UID 时，回退到默认数据存储，避免多用户进度读写中断

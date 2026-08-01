@@ -8,6 +8,7 @@
   "search.exclude": {
     ".vscode": true,
     "dist": true,
-    "node_modules": true
+    "node_modules": true,
+    "versions": true
   }
 }
