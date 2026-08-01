@@ -1,10 +1,16 @@
 ﻿import { getNextDay4AM, getNextMonday4AM, useStoreWithDefaults } from "@bettergi/utils";
 
-const uidNumber = await genshin.uid();
-if (!uidNumber) throw new Error("创建用户数据存储失败：无法识别UID");
+const uid = await (async () => {
+  const uidNumber = await genshin.uid();
+  if (uidNumber > 0) {
+    return String(uidNumber);
+  } else {
+    log.warn("无法识别 UID，已回退至默认数据存储，多用户数据存储功能将不可用");
+    return "default";
+  }
+})();
 
 /** 脚本数据存储 */
-const uid = String(uidNumber);
 export const store = useStoreWithDefaults(uid, {
   uid,
   weekly: { expGained: 0, attempts: 0 },
