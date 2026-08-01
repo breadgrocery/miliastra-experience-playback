@@ -40,6 +40,25 @@ export const clickToContinue = () => {
   click(960, 1070);
 };
 
+/** 查找UID文本 */
+export const findUidText = () => {
+  const im = captureGameRegion();
+  const ro = RecognitionObject.ocr(1730, 1050, 140, 30);
+  return (() => {
+    const list = im.findMulti(ro);
+    for (let i = 0; i < list.count; i++) {
+      if (list[i] && list[i].isExist()) {
+        const uid = list[i].text.replace(/\D/g, "");
+        /** 亚服 4.4 版本注册后的 UID 为 18开头的10位数字 */
+        if (uid.length >= 9) {
+          list[i].drawSelf("group_text");
+          return uid;
+        }
+      }
+    }
+  })();
+};
+
 /** 查找派蒙图标（判断处于奇域大世界/大厅） */
 export const findPaimon = () => {
   const img = "assets/UI_Icon_Paimon.png";
