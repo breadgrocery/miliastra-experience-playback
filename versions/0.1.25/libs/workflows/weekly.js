@@ -1,21 +1,22 @@
-﻿import {
+import {
   ProgressTracker,
   getErrorMessage,
   getNextMonday4AM,
   isHostException
-} from "@bettergi/utils";
-import { userConfig } from "../constants/config";
-import { store } from "../constants/store";
-import { enterRoom, leaveRoom } from "../modules/room";
-import { deleteStageSave } from "../modules/save";
-import { availablePlaybackFiles, exitStage, playStage } from "../modules/stage";
+} from "../@bettergi+utils.js";
+import { userConfig } from "../constants/config.js";
+import { store } from "../constants/store.js";
+import { enterRoom, leaveRoom } from "../modules/room.js";
+import { deleteStageSave } from "../modules/save.js";
+import { availablePlaybackFiles, exitStage, playStage } from "../modules/stage.js";
+import { __name } from "../rolldown-runtime.js";
 
-export const execWeeklyTask = async () => {
+//#region src/workflows/weekly.ts
+const execWeeklyTask = async () => {
   if (!userConfig.weeklyEnabled) {
     log.warn("未启用执行每周通关任务，跳过");
     return;
   }
-
   /** 确保通关回放文件存在 */
   const files = availablePlaybackFiles();
   const playbacks = userConfig.playbacks
@@ -25,56 +26,47 @@ export const execWeeklyTask = async () => {
     log.warn("未找到任何通关回放文件，请确保已录制回放并拷贝到 assets/playbacks 目录下");
     return;
   }
-
   /** 新的一周开始，重置经验值数据 */
   if (Date.now() >= store.nextWeek) {
-    store.weekly = { expGained: 0, attempts: 0 };
+    store.weekly = {
+      expGained: 0,
+      attempts: 0
+    };
     store.nextWeek = getNextMonday4AM().getTime();
   }
-
   /** 检查本周经验值是否已达上限 */
-  if (store.weekly.expGained >= userConfig.expWeeklyLimit) {
-    if (userConfig.force) {
-      log.warn("本周获取经验值已达上限，强制执行");
-    } else {
+  if (store.weekly.expGained >= userConfig.expWeeklyLimit)
+    if (userConfig.force) log.warn("本周获取经验值已达上限，强制执行");
+    else {
       log.warn("本周获取经验值已达上限，跳过执行");
       return;
     }
-  }
-
   /** 计算本次本周剩余可获取经验值 */
   let expRemaining = userConfig.expWeeklyLimit - store.weekly.expGained;
   expRemaining = expRemaining > 0 ? expRemaining : userConfig.expWeeklyLimit;
   /** 计算需要进行的尝试次数 */
   let attempts = Math.ceil(expRemaining / userConfig.expPerAttempt);
   attempts = userConfig.thisAttempts > 0 ? userConfig.thisAttempts : attempts;
-
   /** 离开当前所在房间（如果存在） */
   await leaveRoom();
-
   /** 创建进度追踪器 */
   const tracker = new ProgressTracker(attempts);
   /** 迭代尝试 */
-  for (let i = 0; i < attempts; i++) {
+  for (let i = 0; i < attempts; i++)
     try {
       tracker.print(`开始 ${store.uid} 本周第 ${store.weekly.attempts + 1} 次奇域挑战...`);
-
       /** 删除关卡存档 */
       const isDeleted = await deleteStageSave();
-
       /** 进入房间 */
       await enterRoom(userConfig.room);
-
       /** 游玩关卡 */
       await playStage(playbacks);
-
       /** 关卡结束，更新数据存储 */
       store.weekly.attempts += 1;
       store.weekly.expGained += isDeleted
         ? userConfig.expPerAttempt
         : userConfig.expPerAttempt % 50;
       tracker.tick({ increment: 1 });
-
       /** 本周已获取经验值达到上限，跳出循环 */
       if (store.weekly.expGained >= userConfig.expWeeklyLimit) {
         if (!userConfig.force) {
@@ -91,7 +83,8 @@ export const execWeeklyTask = async () => {
       await genshin.returnMainUi();
       log.error("脚本执行出错: {error}", getErrorMessage(err));
     }
-  }
-
   await genshin.returnMainUi();
 };
+
+//#endregion
+export { execWeeklyTask };

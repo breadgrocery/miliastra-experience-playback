@@ -1,10 +1,10 @@
-﻿import {
+import {
   assertRegionAppearing,
   assertRegionDisappearing,
   getErrorMessage,
   isHostException
-} from "@bettergi/utils";
-import { userConfig } from "../constants/config";
+} from "../@bettergi+utils.js";
+import { userConfig } from "../constants/config.js";
 import {
   findBeyondFavoritesBtn,
   findConfirmBtn,
@@ -15,14 +15,15 @@ import {
   findManageStagesBtn,
   findSaveTimePlaceholder,
   findSaveToDeletePos
-} from "../constants/regions";
-import { goToRecommendedWonderlands } from "./room";
+} from "../constants/regions.js";
+import { __name } from "../rolldown-runtime.js";
+import { goToRecommendedWonderlands } from "./room.js";
 
+//#region src/modules/save.ts
 /** 进入管理关卡存档界面 */
 const goToManageStageSave = async () => {
   /** 打开人气奇域 */
   await goToRecommendedWonderlands();
-
   /** 打开奇域收藏->管理关卡 */
   await assertRegionAppearing(
     findEditStageSaveBtn,
@@ -37,14 +38,12 @@ const goToManageStageSave = async () => {
     },
     { maxAttempts: 5 }
   );
-
   /** 等待 "1970年1月1日 08:00" 占位文本消失 */
-  await sleep(1000);
+  await sleep(1e3);
   await assertRegionDisappearing(findSaveTimePlaceholder, "等待存档时间占位文本消失超时");
 };
-
 /** 删除关卡存档 */
-export const deleteStageSave = async () => {
+const deleteStageSave = async () => {
   let isDeleted = false;
   if (!userConfig.deleteStageSave || userConfig.deleteStageSaveKeyword.trim() === "") {
     log.info("未启用删除关卡存档，跳过");
@@ -53,20 +52,18 @@ export const deleteStageSave = async () => {
   try {
     /** 进入管理关卡存档界面 */
     await goToManageStageSave();
-
     /** 选中要删除的关卡的局外存档 */
     const stagePos = await findSaveToDeletePos(userConfig.deleteStageSaveKeyword);
-    if (stagePos === undefined) {
+    if (stagePos === void 0) {
       log.warn("未找到要删除的关卡存档，跳过");
       return isDeleted;
     }
     stagePos?.drawSelf("group_text");
     const colPos = findExternalSaveColumnPos();
-    if (colPos === undefined) {
+    if (colPos === void 0) {
       log.warn("无法确定关卡的局外存档列位置，跳过");
       return isDeleted;
     }
-
     /** 进入编辑模式 */
     await assertRegionDisappearing(
       findEditStageSaveBtn,
@@ -76,7 +73,6 @@ export const deleteStageSave = async () => {
       },
       { maxAttempts: 5 }
     );
-
     /** 计算勾选框位置并点击 */
     const [cx, cy] = [(colPos.x * 2 + colPos.width) / 2, stagePos.y + 40];
     await assertRegionAppearing(
@@ -85,9 +81,11 @@ export const deleteStageSave = async () => {
       () => {
         click(Math.ceil(cx), Math.ceil(cy));
       },
-      { maxAttempts: 5, retryInterval: 1500 }
+      {
+        maxAttempts: 5,
+        retryInterval: 1500
+      }
     );
-
     /** 点击删除所选按钮 */
     await assertRegionDisappearing(
       () => findDeleteExternalSaveChecked(colPos.x),
@@ -98,16 +96,13 @@ export const deleteStageSave = async () => {
         await sleep(500);
         findConfirmBtn()?.click();
         findDeleteStageSaveBtn()?.click();
-        await sleep(1000);
+        await sleep(1e3);
         findConfirmBtn()?.click();
         await sleep(500);
         findConfirmBtn()?.click();
       },
-      {
-        maxAttempts: 5
-      }
+      { maxAttempts: 5 }
     );
-
     /** 标记为已删除 */
     isDeleted = true;
   } catch (err) {
@@ -119,3 +114,6 @@ export const deleteStageSave = async () => {
   }
   return isDeleted;
 };
+
+//#endregion
+export { deleteStageSave };

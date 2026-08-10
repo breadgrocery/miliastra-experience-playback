@@ -1,5 +1,10 @@
 # 更新日志
 
+## [0.1.25](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.25)
+
+- 优化恶劣网络环境下删除存档健壮性
+- 添加内置 UID 识别函数（0.63.0版本已修复）兜底
+
 ## [0.1.24](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.24)
 
 - 无法识别 UID 时，回退到默认数据存储，避免多用户进度读写中断
