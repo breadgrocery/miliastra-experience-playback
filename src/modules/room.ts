@@ -136,8 +136,8 @@ export const enterRoom = async (room: string) => {
 
 /** 离开房间 */
 export const leaveRoom = async () => {
-  /** 当前在大厅，且存在房间 */
-  if ((isInLobby() && findEnterRoomShortcut() !== undefined) || isInRoom()) {
+  /** 房间已存在 */
+  if (findEnterRoomShortcut() !== undefined || isInRoom()) {
     log.info("当前存在房间，离开房间...");
     /** 先进入房间 */
     await assertRegionAppearing(
