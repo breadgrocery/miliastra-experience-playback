@@ -1,6 +1,6 @@
 {
   "name": "miliastra-experience-playback",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "千星奇域·经验刷取(回放通关版)",
   "type": "module",
   "keywords": [
@@ -26,18 +26,18 @@
     "build": "bettergi-cli"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.2.16",
-    "@bettergi/types": "^0.1.17",
+    "@bettergi/cli": "^0.2.17",
+    "@bettergi/types": "^0.1.19",
     "@bettergi/utils": "^0.1.33",
-    "@commitlint/cli": "^21.2.1",
-    "@commitlint/config-conventional": "^21.2.0",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
     "@eslint/js": "^10.0.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "eslint": "^10.8.1",
-    "lefthook": "^2.1.10",
-    "prettier": "^3.9.6",
+    "eslint": "^10.11.0",
+    "lefthook": "^2.1.14",
+    "prettier": "^3.9.9",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.66.0"
+    "typescript-eslint": "^8.70.1"
   },
   "commitlint": {
     "extends": [

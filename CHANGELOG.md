@@ -1,5 +1,13 @@
 # 更新日志
 
+## [0.1.27](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.27)
+
+- 修复多重弹窗（例如随机试行斗篷）可能导致奖励领取不完整
+
+## [0.1.26](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.26)
+
+- 修复关卡内对话框概率关闭失败
+
 ## [0.1.25](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.25)
 
 - 优化恶劣网络环境下删除存档健壮性
