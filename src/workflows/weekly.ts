@@ -8,6 +8,7 @@ import { userConfig } from "../constants/config";
 import { store } from "../constants/store";
 import { enterRoom, leaveRoom } from "../modules/room";
 import { deleteStageSave } from "../modules/save";
+import { ensureMultiPlayer } from "../modules/scene";
 import { availablePlaybackFiles, exitStage, playStage } from "../modules/stage";
 
 export const execWeeklyTask = async () => {
@@ -15,6 +16,9 @@ export const execWeeklyTask = async () => {
     log.warn("未启用执行每周通关任务，跳过");
     return;
   }
+
+  /** 确保不处于 禁止联机 状态/场景 */
+  ensureMultiPlayer();
 
   /** 确保通关回放文件存在 */
   const files = availablePlaybackFiles();

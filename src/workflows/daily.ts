@@ -3,6 +3,7 @@ import { userConfig } from "../constants/config";
 import { store } from "../constants/store";
 import { fetchBattlepassExp, fetchCultivateReward } from "../modules/reawrd";
 import { enterRoom, leaveRoom } from "../modules/room";
+import { ensureMultiPlayer } from "../modules/scene";
 import { availablePlaybackFiles, exitStage, playStage } from "../modules/stage";
 
 export const execDailyTask = async () => {
@@ -10,6 +11,9 @@ export const execDailyTask = async () => {
     log.warn("未启用执行每日通关任务，跳过");
     return;
   }
+
+  /** 确保不处于 禁止联机 状态/场景 */
+  ensureMultiPlayer();
 
   /** 确保通关回放文件存在 */
   if (userConfig.dailyRooms.length !== userConfig.dailyPlaybacks.length) {

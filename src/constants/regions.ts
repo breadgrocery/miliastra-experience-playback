@@ -73,6 +73,13 @@ export const findElementViewBtn = () => {
   iro?.drawSelf("group_img");
   return iro;
 };
+/** 查找禁止联机按钮 */
+export const findSinglePlayerBtn = () => {
+  const img = "assets/UI_BtnIcon_SinglePlayer.png";
+  const iro = findImageWithinBounds(img, 0, 0, 500, 80, { useMask: true, threshold: 0.92 });
+  iro?.drawSelf("group_img");
+  return iro;
+};
 /** 查找奇域大厅按钮（判断处于奇域大厅） */
 export const findMiliastraBtn = () => {
   const img = "assets/UI_BtnIcon_Miliastra.png";

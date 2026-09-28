@@ -80,7 +80,7 @@ export const fetchBattlepassExp = async () => {
 /** 关闭奖励弹窗 */
 const closeRewardPopups = async () => {
   /** 存在多重弹窗（例如随机试行斗篷），可能导致奖励领取不完整 */
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     clickToContinue();
     await sleep(500);
     clickToContinue();
