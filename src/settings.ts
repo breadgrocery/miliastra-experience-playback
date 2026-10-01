@@ -80,7 +80,7 @@ const settings = defineSettings([
     type: "multi-checkbox",
     name: "dailyRewards",
     label: "领取每日奖励",
-    options: ["诸界纪游", "绮衣珍赏", "奇趣盛邀", "星境彩馈"],
+    options: ["诸界纪游", "绮衣珍赏", "奇趣盛邀", "星境彩馈", "绮星盛会"],
     default: ["诸界纪游", "绮衣珍赏", "奇趣盛邀", "星境彩馈"]
   },
   {

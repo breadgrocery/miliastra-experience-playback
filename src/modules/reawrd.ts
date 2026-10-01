@@ -5,8 +5,11 @@ import {
   findBeyondBattlepassBtn,
   findBeyondBattlepassPopup,
   findBottomBtnText,
+  findFestiveFever,
   findFetchRewardBtn,
-  findHeaderTitle
+  findHeaderTitle,
+  findStarlitGalaRewardBtn,
+  findStarlitGalaRewardDialog
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
 
@@ -78,53 +81,24 @@ export const fetchBattlepassExp = async () => {
 };
 
 /** 关闭奖励弹窗 */
-const closeRewardPopups = async () => {
+const closeRewardPopups = async (offsetX = 0, offsetY = 0) => {
   /** 存在多重弹窗（例如随机试行斗篷），可能导致奖励领取不完整 */
   for (let i = 0; i < 6; i++) {
-    clickToContinue();
+    clickToContinue(offsetX, offsetY);
     await sleep(500);
-    clickToContinue();
+    clickToContinue(offsetX, offsetY);
   }
 };
 
 /** 点击领取奖励按钮 */
-const clickClaimRewardBtn = async () => {
+const clickClaimRewardBtn = async (offsetX = 0, offsetY = 0) => {
   const reward = findFetchRewardBtn();
   if (reward) {
     reward.click();
     await sleep(50);
     reward.click();
-    await closeRewardPopups();
+    await closeRewardPopups(offsetX, offsetY);
   }
-};
-
-/** 领取星境彩馈奖励 */
-const fetchMiliastralGifts = async () => {
-  /** 打开星境彩馈 */
-  await assertRegionAppearing(
-    () => findHeaderTitle("星境", true) || findHeaderTitle("彩馈", true),
-    "打开星境彩馈超时，活动未轮换/已结束",
-    async () => {
-      keyPress("VK_F6");
-      await sleep(2000);
-      if (!findHeaderTitle("星境", true) && !findHeaderTitle("彩馈", true)) {
-        keyPress("VK_Q");
-      }
-    },
-    { maxAttempts: 5, retryInterval: 1000 }
-  );
-
-  /** 领取星境彩馈奖励 */
-  await assertRegionDisappearing(
-    findFetchRewardBtn,
-    "领取星境彩馈奖励超时",
-    async () => {
-      await clickClaimRewardBtn();
-    },
-    { maxAttempts: 5, retryInterval: 2000 }
-  );
-
-  await genshin.returnMainUi();
 };
 
 /** 领取绮衣珍赏奖励 */
@@ -172,12 +146,86 @@ const fetchInvitationToWonderland = async () => {
     { maxAttempts: 5, retryInterval: 1000 }
   );
 
-  /** 领取妙思觅索奖励 */
+  /** 领取奇趣盛邀奖励 */
   await assertRegionDisappearing(
     findFetchRewardBtn,
-    "领取妙思觅索奖励超时",
+    "领取奇趣盛邀奖励超时",
     async () => {
       await clickClaimRewardBtn();
+    },
+    { maxAttempts: 5, retryInterval: 2000 }
+  );
+
+  await genshin.returnMainUi();
+};
+
+/** 领取星境彩馈奖励 */
+const fetchMiliastralGifts = async () => {
+  /** 打开星境彩馈 */
+  await assertRegionAppearing(
+    () => findHeaderTitle("星境", true) || findHeaderTitle("彩馈", true),
+    "打开星境彩馈超时，活动未轮换/已结束",
+    async () => {
+      keyPress("VK_F6");
+      await sleep(2000);
+      if (!findHeaderTitle("星境", true) && !findHeaderTitle("彩馈", true)) {
+        keyPress("VK_Q");
+      }
+    },
+    { maxAttempts: 5, retryInterval: 1000 }
+  );
+
+  /** 领取星境彩馈奖励 */
+  await assertRegionDisappearing(
+    findFetchRewardBtn,
+    "领取星境彩馈奖励超时",
+    async () => {
+      await clickClaimRewardBtn();
+    },
+    { maxAttempts: 5, retryInterval: 2000 }
+  );
+
+  await genshin.returnMainUi();
+};
+
+/** 领取绮星盛会奖励 */
+export const fetchStarlitGala = async () => {
+  /** 打开绮星盛会 */
+  await assertRegionAppearing(
+    () => findHeaderTitle("绮星", true) || findHeaderTitle("盛会", true),
+    "打开绮星盛会超时，活动未轮换/已结束",
+    async () => {
+      keyPress("VK_F6");
+      await sleep(2000);
+      if (!findHeaderTitle("绮星", true) && !findHeaderTitle("盛会", true)) {
+        keyPress("VK_Q");
+      }
+    },
+    { maxAttempts: 5, retryInterval: 1000 }
+  );
+
+  /** 打开绮星盛会奖励界面 */
+  await assertRegionAppearing(
+    findFestiveFever,
+    "打开绮星盛会奖励界面超时",
+    async () => {
+      /** 打开绮星盛会奖励对话框 */
+      findStarlitGalaRewardBtn()?.click();
+
+      /** 滚动查找盛会人气 */
+      if (!findFestiveFever() && findStarlitGalaRewardDialog()) {
+        keyPress("VK_S");
+      }
+    },
+    { maxAttempts: 5, retryInterval: 1000 }
+  );
+
+  /** 领取绮星盛会奖励 */
+  await assertRegionDisappearing(
+    findFetchRewardBtn,
+    "领取绮星盛会奖励超时",
+    async () => {
+      await clickClaimRewardBtn(0, -150);
     },
     { maxAttempts: 5, retryInterval: 2000 }
   );
@@ -196,7 +244,8 @@ export const fetchCultivateReward = async () => {
   const rewards = Object.entries({
     "绮衣珍赏": fetchRaimentCollection,
     "奇趣盛邀": fetchInvitationToWonderland,
-    "星境彩馈": fetchMiliastralGifts
+    "星境彩馈": fetchMiliastralGifts,
+    "绮星盛会": fetchStarlitGala
   }).filter(([key]) => userConfig.dailyRewards.includes(key));
 
   if (rewards.length === 0) {

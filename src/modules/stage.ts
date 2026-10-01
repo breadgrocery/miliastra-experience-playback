@@ -10,7 +10,8 @@ import {
   findPromptText,
   findSetupFilterBtn,
   findSkipBtn,
-  findStageEscBtn
+  findStageEscBtn,
+  findStarlitGalaVoteBtn
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
 
@@ -136,15 +137,25 @@ const exitStageToLobby = async () => {
   log.info("退出关卡返回大厅...");
   const done = await waitForAction(
     isInLobby,
-    async () => {
-      /** 跳过奇域等级提升页面（奇域等级每逢11、21、31、41级时出现加星页面） */
+    async attempts => {
+      /** 跳过奇域等级提升界面（奇域等级每逢11、21、31、41级时出现加星界面） */
       clickToContinue();
 
       /** 跳过结算画面 */
       findSkipBtn()?.click();
 
       /** 点击底部 “返回大厅” 按钮 */
-      findBottomBtnText("返回大厅")?.click();
+      const exitToLobbyBtn = findBottomBtnText("返回大厅");
+      if (exitToLobbyBtn) {
+        /** 绮星盛会投票 */
+        if (userConfig.dailyRewards.includes("绮星盛会") && attempts <= 20) {
+          /** 等待投票动画结束 */
+          await sleep(1500);
+        }
+        findStarlitGalaVoteBtn()?.doubleClick();
+
+        exitToLobbyBtn.click();
+      }
     },
     { maxAttempts: 60 }
   );

@@ -36,8 +36,8 @@ export const findCloseDialog = () => {
   return iro;
 };
 /** 通用：点击空白处区域继续位置 */
-export const clickToContinue = () => {
-  click(960, 1070);
+export const clickToContinue = (offsetX = 0, offsetY = 0) => {
+  click(960 + offsetX, 1070 + offsetY);
 };
 
 /** 查找UID文本 */
@@ -226,6 +226,12 @@ export const findSkipBtn = () => {
   txt?.drawSelf("group_text");
   return txt;
 };
+/** 关卡：查找绮星盛会投票按钮 */
+export const findStarlitGalaVoteBtn = () => {
+  const txt = findTextWithinBounds("投票", 1180, 650, 740, 330, { contains: false });
+  txt?.drawSelf("group_text");
+  return txt;
+};
 /** 关卡：查找关卡退出按钮 */
 export const findStageEscBtn = () => {
   const img = "assets/UI_Icon_Leave.png";
@@ -256,10 +262,32 @@ export const findBeyondBattlepassBtn = () => {
 export const findBeyondBattlepassPopup = () => {
   return findTextWithinBounds("奖励一览", 0, 0, 960, 1080, { contains: true });
 };
+/** 绮星盛会：查找奖励按钮 */
+export const findStarlitGalaRewardBtn = () => {
+  const txt = findTextWithinBounds("奖励", 960, 815, 960, 265, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
+};
+/** 绮星盛会：查找奖励对话框 */
+export const findStarlitGalaRewardDialog = () => {
+  const txt = findTextWithinBounds("奖励", 810, 150, 300, 230, { contains: true });
+  txt?.drawSelf("group_text");
+  return txt;
+};
+/** 绮星盛会：查找盛会人气图标 */
+export const findFestiveFever = () => {
+  const img = "assets/UI_Icon_FestiveFever.png";
+  const iro = findImageWithinBounds(img, 410, 160, 1100, 660, {
+    use3Channels: true,
+    threshold: 0.8
+  });
+  iro?.drawSelf("group_img");
+  return iro;
+};
 /** 奖励：查找领取奖励按钮 */
 export const findFetchRewardBtn = () => {
   const img = "assets/UI_Img_UGCCultivateReward_FetchHint.png";
-  const iro = findImageWithinBounds(img, 1550, 100, 370, 880, {
+  const iro = findImageWithinBounds(img, 1450, 100, 470, 880, {
     useMask: true,
     use3Channels: true,
     threshold: 0.8

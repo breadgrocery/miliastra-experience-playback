@@ -71,7 +71,7 @@
 
 ## [0.1.13](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.13)
 
-- 修复点击跳过奇域等级提升页面失败：新版本「点击空白处继续」会被 OCR 误识别，改为无条件点击空白处，并使用更保守的点击位置
+- 修复点击跳过奇域等级提升界面失败：新版本「点击空白处继续」会被 OCR 误识别，改为无条件点击空白处，并使用更保守的点击位置
 
 ## [0.1.12](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.12)
 
