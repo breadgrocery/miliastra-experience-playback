@@ -1,5 +1,12 @@
 # 更新日志
 
+## [0.1.28](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.28)
+
+- 每日任务支持「绮星盛会」（默认关闭），因活动介绍中提到了 “首届” 和 “年度”
+- 奇域关卡结算时，如果启用「绮星盛会」奖励领取，将尝试进行「绮星盛会」投票
+- 当处于禁止联机状态时运行脚本，将打印警告信息
+- 调整部分图片资源
+
 ## [0.1.27](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.27)
 
 - 修复多重弹窗（例如随机试行斗篷）可能导致奖励领取不完整
