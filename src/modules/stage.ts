@@ -1,4 +1,9 @@
-﻿import { assertRegionAppearing, assertRegionDisappearing, waitForAction } from "@bettergi/utils";
+﻿import {
+  assertRegionAppearing,
+  assertRegionDisappearing,
+  getErrorMessage,
+  waitForAction
+} from "@bettergi/utils";
 import { userConfig } from "../constants/config";
 import {
   clickToChooseFirstCharacter,
@@ -38,7 +43,7 @@ export const playStage = async (playbacks: string[]) => {
       }
 
       /** 判断是否需要快速编队 */
-      const findSetupMsg = () => findPromptText("至少") || findPromptText("角色");
+      const findSetupMsg = () => findBottomBtnText("快速", true) && findPromptText("请选择至少");
       if (findSetupMsg()) {
         log.info("快速编队...");
         await assertRegionDisappearing(findSetupMsg, "等待未编队提示消失超时");
@@ -148,11 +153,23 @@ const exitStageToLobby = async () => {
       const exitToLobbyBtn = findBottomBtnText("返回大厅");
       if (exitToLobbyBtn) {
         /** 绮星盛会投票 */
-        if (userConfig.dailyRewards.includes("绮星盛会") && attempts <= 20) {
-          /** 等待投票动画结束 */
-          await sleep(1500);
+        try {
+          if (userConfig.dailyRewards.includes("绮星盛会") && attempts <= 15) {
+            /** 等待投票动画结束 */
+            await sleep(2000);
+          }
+          if (findStarlitGalaVoteBtn()) {
+            await assertRegionDisappearing(
+              findStarlitGalaVoteBtn,
+              "等待绮星盛会投票完成超时",
+              () => {
+                findStarlitGalaVoteBtn()?.doubleClick();
+              }
+            );
+          }
+        } catch (err) {
+          log.warn("绮星盛会投票失败: {error}", getErrorMessage(err));
         }
-        findStarlitGalaVoteBtn()?.doubleClick();
 
         exitToLobbyBtn.click();
       }

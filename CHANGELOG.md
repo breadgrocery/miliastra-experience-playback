@@ -1,5 +1,9 @@
 # 更新日志
 
+## [0.1.29](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.29)
+
+- 修复"快速编队"判断会受到关卡Loading文字影响
+
 ## [0.1.28](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.28)
 
 - 每日任务支持「绮星盛会」（默认关闭），因活动介绍中提到了 “首届” 和 “年度”
