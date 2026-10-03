@@ -1,5 +1,9 @@
 # 更新日志
 
+## [0.1.30](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.30)
+
+- 修复关卡超时结算流程不会尝试进行「绮星盛会」投票
+
 ## [0.1.29](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.29)
 
 - 修复"快速编队"判断会受到关卡Loading文字影响
