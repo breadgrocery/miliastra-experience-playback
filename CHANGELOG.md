@@ -1,5 +1,9 @@
 # 更新日志
 
+## [0.1.31](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.31)
+
+- 修复关卡存档恰好位于第8行时，勾选按钮被列表遮挡导致删除存档失败的问题
+
 ## [0.1.30](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.30)
 
 - 修复关卡超时结算流程不会尝试进行「绮星盛会」投票
