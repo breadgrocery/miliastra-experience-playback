@@ -13,7 +13,7 @@ export const store = await (async () => {
   return useStoreWithDefaults(uid, {
     uid,
     weekly: { expGained: 0, attempts: 0 },
-    daily: { attempts: 0 },
+    daily: { rooms: {} as Record<string, number> },
     nextWeek: getNextMonday4AM().getTime(),
     nextDay: getNextDay4AM().getTime()
   });

@@ -12,10 +12,11 @@ import {
   findBottomBtnText,
   findCloseDialog,
   findExitStageBtn,
+  findLeave,
+  findLoading,
   findPromptText,
   findSetupFilterBtn,
   findSkipBtn,
-  findStageEscBtn,
   findStarlitGalaVoteBtn
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
@@ -26,16 +27,43 @@ export const availablePlaybackFiles = () => {
 };
 
 export const playStage = async (playbacks: string[]) => {
+  log.info("进入关卡...");
   /** 等待进入关卡 */
+  const isStageLoadedOrEnded = (() => {
+    let loadingStartTime: number | null = null;
+    return () => {
+      const isEntered = findLeave() !== undefined;
+      if (isEntered) {
+        log.info("发现退出按钮，已进入关卡");
+      }
+
+      const isEnded = findBottomBtnText("返回大厅", { maxEditDistance: 1 }) !== undefined;
+      if (isEnded) {
+        log.info("发现返回大厅按钮，关卡已结束");
+      }
+
+      const isLoading = findLoading() !== undefined;
+      const timeout = userConfig.loadingTimeout;
+      if (isLoading && loadingStartTime === null) {
+        loadingStartTime = Date.now();
+        log.info("发现加载图标，超时 {timeout} 秒将视作已进入关卡，执行通关回放文件", timeout);
+      }
+      const isTimedOut =
+        loadingStartTime !== null && !isLoading && Date.now() - loadingStartTime > timeout * 1000;
+
+      return isEntered || isEnded || isTimedOut;
+    };
+  })();
   const ok = await waitForAction(
-    () => findStageEscBtn() !== undefined || findBottomBtnText("返回大厅") !== undefined,
+    isStageLoadedOrEnded,
     async () => {
       /** 关卡房间，点击 “开始游戏” 按钮 */
       /** 「经典模式」关卡，点击 “开始挑战” 按钮 */
-      findBottomBtnText("开始", true)?.click();
+      findBottomBtnText("开始", { contains: true })?.click();
 
       /** 判断是否已经加入准备区 */
-      const findPrepareMsg = () => findPromptText("请先加入") || findPromptText("准备");
+      const findPrepareMsg = () =>
+        findPromptText("请先加入准备区", { contains: true, maxEditDistance: 3 });
       if (findPrepareMsg()) {
         log.info("加入准备区...");
         await assertRegionDisappearing(findPrepareMsg, "等待加入准备区提示消失超时");
@@ -43,15 +71,19 @@ export const playStage = async (playbacks: string[]) => {
       }
 
       /** 判断是否需要快速编队 */
-      const findSetupMsg = () => findBottomBtnText("快速", true) && findPromptText("请选择至少");
+      const findSetupMsg = () =>
+        findBottomBtnText("快速", { contains: true }) &&
+        findPromptText("请选择至少", { contains: true, maxEditDistance: 2 });
       if (findSetupMsg()) {
         log.info("快速编队...");
         await assertRegionDisappearing(findSetupMsg, "等待未编队提示消失超时");
         await assertRegionAppearing(findSetupFilterBtn, "等待快速编队界面出现超时", () => {
-          findBottomBtnText("快速", true)?.click();
+          findBottomBtnText("快速", { contains: true })?.click();
         });
         /** 编入第一位角色 */
-        const findSaveBtn = () => findBottomBtnText("保存", true) || findPromptText("配置");
+        const findSaveBtn = () =>
+          findBottomBtnText("保存", { contains: true }) ||
+          findPromptText("配置", { contains: true });
         await assertRegionAppearing(findSaveBtn, "快速编队超时", () => {
           clickToChooseFirstCharacter();
         });
@@ -68,7 +100,7 @@ export const playStage = async (playbacks: string[]) => {
   await sleep(1000);
 
   /** 直接通关结算的关卡（不会进入关卡） */
-  if (findBottomBtnText("返回大厅")) {
+  if (findBottomBtnText("返回大厅", { contains: true, maxEditDistance: 1 })) {
     await finishStageAndReturn();
     return;
   }
@@ -106,7 +138,7 @@ const execStagePlayback = async (playbacks: string[]) => {
 /** 返回大厅 */
 const returnToLobby = async (attempts?: number) => {
   /** 点击底部 “返回大厅” 按钮 */
-  const exitToLobbyBtn = findBottomBtnText("返回大厅");
+  const exitToLobbyBtn = findBottomBtnText("返回大厅", { contains: true, maxEditDistance: 1 });
   if (exitToLobbyBtn) {
     /** 绮星盛会投票 */
     try {
@@ -129,8 +161,7 @@ const returnToLobby = async (attempts?: number) => {
 
 /** 强制退出关卡 */
 export const forceExitStage = async () => {
-  if (findStageEscBtn() === undefined) return;
-
+  if (isInLobby()) return;
   log.warn("关卡超时，尝试退出关卡...");
   await assertRegionAppearing(
     findExitStageBtn,

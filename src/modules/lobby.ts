@@ -1,19 +1,19 @@
 ﻿import { assertRegionAppearing, waitForAction } from "@bettergi/utils";
 import { userConfig } from "../constants/config";
 import {
+  findBeyondHall,
+  findBeyondPaimon,
   findConfirmBtn,
-  findElementViewBtn,
   findGotTeyvatBtn,
   findHeaderTitle,
-  findMiliastraBtn,
   findPaimon
 } from "../constants/regions";
 
 /** 判断是否处于奇域大厅 */
-export const isInLobby = () => findPaimon() !== undefined && findMiliastraBtn() !== undefined;
+export const isInLobby = () => (findBeyondPaimon() || findBeyondHall()) !== undefined;
 
 /** 判断是否处于提瓦特大陆 */
-const isInTeyvat = () => findPaimon() !== undefined && findElementViewBtn() !== undefined;
+const isInTeyvat = () => findPaimon() !== undefined;
 
 /** 退出大厅返回提瓦特大陆 */
 export const exitLobbyToTeyvat = async () => {
@@ -26,7 +26,7 @@ export const exitLobbyToTeyvat = async () => {
 
   log.info("打开当前大厅...");
   await assertRegionAppearing(
-    () => findHeaderTitle("大厅", true),
+    () => findHeaderTitle("大厅", { contains: true }),
     "打开当前大厅超时",
     () => {
       keyPress("VK_F2");

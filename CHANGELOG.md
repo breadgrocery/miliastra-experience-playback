@@ -1,5 +1,12 @@
 # 更新日志
 
+## [1.0.0](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/1.0.0)
+
+- 使用 YOLO ONNX 目标检测替代部分 UI 图标的模板匹配识别（派蒙、禁止联机、奇域大厅、诸界纪游、关卡退出与加载图标等），要求 `bgi_version` ≥ 0.67.0
+- 新增 `loadingTimeout` 配置项（默认 30 秒，范围 1-60 秒），加载图标出现并超过指定时间后视作已进入关卡，适配隐藏左上角退出按钮的关卡
+- 引入编辑距离，提升文字 OCR 容错
+- 优化异常恢复流程健壮性，在大厅或非关卡界面报错时避免强退超时中断后续任务与奖励领取
+
 ## [0.1.31](https://github.com/breadgrocery/miliastra-experience-playback/tree/main/versions/0.1.31)
 
 - 修复关卡存档恰好位于第8行时，勾选按钮被列表遮挡导致删除存档失败的问题

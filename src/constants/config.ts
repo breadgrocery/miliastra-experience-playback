@@ -42,6 +42,7 @@ export const userConfig = {
     : ["诸界纪游", "绮衣珍赏", "奇趣盛邀", "星境彩馈"],
   dailyLimit: Math.max(1, Number(settings.dailyLimit || "1")),
   dailyForce: settings.dailyForce ?? false,
+  loadingTimeout: Math.min(Math.max(1, Number(settings.loadingTimeout) || 30), 60),
   closeStageDialog: settings.closeStageDialog ?? true,
   goToTeyvat: settings.goToTeyvat ?? true
 } as const;

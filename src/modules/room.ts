@@ -15,13 +15,13 @@ import {
 } from "../constants/regions";
 import { isInLobby } from "./lobby";
 
-const isInRoom = () => findHeaderTitle("房间", true) !== undefined;
+const isInRoom = () => findHeaderTitle("房间", { contains: true }) !== undefined;
 
 /** 打开人气奇域 */
 export const goToRecommendedWonderlands = async () => {
   log.info("打开人气奇域界面...");
   await assertRegionAppearing(
-    () => findHeaderTitle("人气", true),
+    () => findHeaderTitle("人气", { contains: true }),
     "打开人气奇域界面超时",
     () => {
       keyPress("VK_F6");
@@ -35,7 +35,7 @@ const createRoom = async (room: string) => {
 
   log.info("打开搜索奇域界面...");
   await assertRegionAppearing(
-    () => findHeaderTitle("搜索", true),
+    () => findHeaderTitle("搜索", { contains: true }),
     "打开搜索奇域界面超时",
     () => {
       findAllWonderlandsBtn()?.click();
@@ -104,7 +104,7 @@ const createRoom = async (room: string) => {
 
   log.info("创建并进入房间...");
   await assertRegionAppearing(
-    () => findHeaderTitle("房间", true),
+    () => findHeaderTitle("房间", { contains: true }),
     "创建并进入房间超时",
     () => {
       findCreateRoomBtn()?.click();
@@ -121,7 +121,7 @@ export const enterRoom = async (room: string) => {
     if (enterButton) {
       log.info("当前已存在房间，进入房间...", room);
       await assertRegionAppearing(
-        () => findHeaderTitle("房间", true),
+        () => findHeaderTitle("房间", { contains: true }),
         "进入房间超时",
         () => {
           keyPress("VK_P");
@@ -141,7 +141,7 @@ export const leaveRoom = async () => {
     log.info("当前存在房间，离开房间...");
     /** 先进入房间 */
     await assertRegionAppearing(
-      () => findHeaderTitle("房间", true),
+      () => findHeaderTitle("房间", { contains: true }),
       "进入房间超时",
       () => {
         keyPress("VK_P");

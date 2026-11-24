@@ -16,6 +16,7 @@ import {
   findSaveTimePlaceholder,
   findSaveToDeletePos
 } from "../constants/regions";
+import { drawingBoard } from "./drawing";
 import { goToRecommendedWonderlands } from "./room";
 
 /** 进入管理关卡存档界面 */
@@ -60,7 +61,7 @@ export const deleteStageSave = async () => {
       log.warn("未找到要删除的关卡存档，跳过");
       return isDeleted;
     }
-    stagePos?.drawSelf("group_text");
+    drawingBoard.text(stagePos);
     const colPos = findExternalSaveColumnPos();
     if (colPos === undefined) {
       log.warn("无法确定关卡的局外存档列位置，跳过");

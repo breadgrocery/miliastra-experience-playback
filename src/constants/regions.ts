@@ -1,39 +1,37 @@
 ﻿import {
+  type TextMatchOptions,
   findImageWithinBounds,
   findTextWithinBounds,
   findTextWithinListView
 } from "@bettergi/utils";
+import { drawingBoard } from "../modules/drawing";
+import { findYoloRegion, onnxManager } from "../modules/onnx";
 
 /** 通用：查找确认按钮 */
 export const findConfirmBtn = () => {
   const txt = findTextWithinBounds("确认", 480, 720, 960, 145);
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 通用：查找标题文字 */
-export const findHeaderTitle = (title: string, contains?: boolean) => {
-  const txt = findTextWithinBounds(title, 0, 0, 300, 95, { contains });
-  txt?.drawSelf("group_text");
-  return txt;
+export const findHeaderTitle = (title: string, options?: TextMatchOptions) => {
+  const txt = findTextWithinBounds(title, 0, 0, 300, 95, options);
+  return drawingBoard.text(txt);
 };
 /** 通用：查找提示文字 */
-export const findPromptText = (text: string, contains: boolean = true) => {
-  const txt = findTextWithinBounds(text, 576, 432, 768, 216, { contains });
-  txt?.drawSelf("group_text");
-  return txt;
+export const findPromptText = (text: string, options?: TextMatchOptions) => {
+  const txt = findTextWithinBounds(text, 576, 432, 768, 216, options);
+  return drawingBoard.text(txt);
 };
 /** 通用：查找底部按钮文字 */
-export const findBottomBtnText = (text: string, contains?: boolean) => {
-  const txt = findTextWithinBounds(text, 0, 980, 1920, 100, { contains });
-  txt?.drawSelf("group_text");
-  return txt;
+export const findBottomBtnText = (text: string, options?: TextMatchOptions) => {
+  const txt = findTextWithinBounds(text, 0, 980, 1920, 100, options);
+  return drawingBoard.text(txt);
 };
 /** 通用：查找关闭对话框按钮 */
 export const findCloseDialog = () => {
   const img = "assets/UI_BtnIcon_Close.png";
   const iro = findImageWithinBounds(img, 410, 160, 1100, 660, { useMask: true, threshold: 0.85 });
-  iro?.drawSelf("group_img");
-  return iro;
+  return drawingBoard.img(iro);
 };
 /** 通用：点击空白处区域继续位置 */
 export const clickToContinue = (offsetX = 0, offsetY = 0) => {
@@ -51,7 +49,7 @@ export const findUidText = () => {
         const uid = list[i].text.replace(/\D/g, "");
         /** 亚服 4.4 版本注册后的 UID 为 18开头的10位数字 */
         if (uid.length >= 9) {
-          list[i].drawSelf("group_text");
+          drawingBoard.text(list[i]);
           return uid;
         }
       }
@@ -59,52 +57,62 @@ export const findUidText = () => {
   })();
 };
 
-/** 查找派蒙图标（判断处于奇域大世界/大厅） */
+/** 检测派蒙图标（判断处于大世界） */
 export const findPaimon = () => {
-  const img = "assets/UI_Icon_Paimon.png";
-  const iro = findImageWithinBounds(img, 0, 0, 100, 100, { useMask: true, threshold: 0.8 });
-  iro?.drawSelf("group_img");
-  return iro;
+  const list = onnxManager.uiDet.detect();
+  const iro = findYoloRegion(
+    list,
+    item => item.name === "paimon" && item.x < 960 && item.y + item.height < 120
+  );
+  return drawingBoard.detect(iro);
 };
-/** 查找元素视野按钮（判断处于大世界） */
-export const findElementViewBtn = () => {
-  const img = "assets/UI_BtnIcon_ElementView.png";
-  const iro = findImageWithinBounds(img, 0, 0, 500, 80, { useMask: true, threshold: 0.8 });
-  iro?.drawSelf("group_img");
-  return iro;
-};
-/** 查找禁止联机按钮 */
+/** 检测禁止联机按钮 */
 export const findSinglePlayerBtn = () => {
-  const img = "assets/UI_BtnIcon_SinglePlayer.png";
-  const iro = findImageWithinBounds(img, 0, 0, 500, 80, { useMask: true, threshold: 0.92 });
-  iro?.drawSelf("group_img");
-  return iro;
+  const list = onnxManager.uiDet.detect();
+  const iro = findYoloRegion(
+    list,
+    item => item.name === "single player" && item.x < 960 && item.y + item.height < 120
+  );
+  return drawingBoard.detect(iro);
 };
-/** 查找奇域大厅按钮（判断处于奇域大厅） */
-export const findMiliastraBtn = () => {
-  const img = "assets/UI_BtnIcon_Miliastra.png";
-  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.75 });
-  iro?.drawSelf("group_img");
-  return iro;
+/** 检测奇域派蒙图标（判断处于奇域大厅） */
+export const findBeyondPaimon = () => {
+  const list = onnxManager.uiDet.detect();
+  const iro = findYoloRegion(
+    list,
+    item => item.name === "beyond paimon" && item.x < 960 && item.y + item.height < 120
+  );
+  return drawingBoard.detect(iro);
+};
+/** 检测奇域大厅按钮（判断处于奇域大厅） */
+export const findBeyondHall = () => {
+  const list = onnxManager.uiDet.detect();
+  const iro = findYoloRegion(
+    list,
+    item => item.name === "beyond hall" && item.x < 960 && item.y + item.height < 120
+  );
+  return drawingBoard.detect(iro);
 };
 
 /** 房间：查找搜索奇域按钮 */
 export const findAllWonderlandsBtn = () => {
-  return findTextWithinBounds("搜索", 1320, 0, 600, 95, { contains: true });
+  const txt = findTextWithinBounds("搜索", 1320, 0, 600, 95, { contains: true });
+  return drawingBoard.text(txt);
 };
 /** 房间：查找奇域搜索输入框 */
 export const findSearchWonderlandInput = () => {
   const txt = findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 房间：查找奇域搜索输入框清除按钮 */
 export const findClearInputBtn = () => {
-  return findTextWithinBounds("清除", 0, 120, 1920, 60, { contains: true });
+  const txt = findTextWithinBounds("清除", 0, 120, 1920, 60, { contains: true });
+  return drawingBoard.text(txt);
 };
 /** 房间：查找搜索奇域按钮 */
 export const findSearchWonderlandBtn = () => {
-  return findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
+  const txt = findTextWithinBounds("搜索", 0, 120, 1920, 60, { contains: true });
+  return drawingBoard.text(txt);
 };
 /** 房间：查找首行前N个奇域搜索结果名称 */
 export const findTopNSearchResultTexts = (n: number) => {
@@ -120,7 +128,7 @@ export const findTopNSearchResultTexts = (n: number) => {
           if (list[i] && list[i].isExist()) {
             const text = list[i].text.trim();
             if (text) {
-              list[i].drawSelf("group_text");
+              drawingBoard.text(list[i]);
               return text;
             }
           }
@@ -136,25 +144,23 @@ export const clickToChooseFirstSearchResult = () => {
 /** 房间：查找进入房间快捷键按钮 */
 export const findEnterRoomShortcut = () => {
   const txt = findTextWithinBounds("房间", 1580, 110, 320, 390, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 房间：查找退出房间按钮 */
 export const findLeaveRoomBtn = () => {
   const img = "assets/UI_Icon_Leave_Right.png";
   const iro = findImageWithinBounds(img, 1570, 0, 350, 100, { threshold: 0.8 });
-  iro?.drawSelf("group_img");
-  return iro;
+  return drawingBoard.img(iro);
 };
 /** 房间：查找跳转大厅按钮 */
 export const findGoToLobbyBtn = () => {
-  return findTextWithinBounds("大厅", 880, 840, 1040, 110, { contains: true });
+  const txt = findTextWithinBounds("大厅", 880, 840, 1040, 110, { contains: true });
+  return drawingBoard.text(txt);
 };
 /** 房间：查找创建房间按钮 */
 export const findCreateRoomBtn = () => {
   const txt = findTextWithinBounds("房间", 960, 95, 960, 70, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 房间：点击加入准备区位置 */
 export const clickToPrepare = () => {
@@ -164,8 +170,7 @@ export const clickToPrepare = () => {
 export const findSetupFilterBtn = () => {
   const img = "assets/UI_Icon_Setup_Filter.png";
   const iro = findImageWithinBounds(img, 0, 0, 90, 80, { threshold: 0.8 });
-  iro?.drawSelf("group_img");
-  return iro;
+  return drawingBoard.img(iro);
 };
 /** 房间：点击选择第一位角色位置 */
 export const clickToChooseFirstCharacter = () => {
@@ -174,21 +179,24 @@ export const clickToChooseFirstCharacter = () => {
 
 /** 存档：查找奇域收藏 */
 export const findBeyondFavoritesBtn = () => {
-  return findTextWithinBounds("收藏", 0, 880, 200, 200, { contains: true });
+  const txt = findTextWithinBounds("收藏", 0, 880, 200, 200, { contains: true });
+  return drawingBoard.text(txt);
 };
 /** 存档：查找管理关卡按钮 */
 export const findManageStagesBtn = () => {
-  return findTextWithinBounds("管理", 1320, 0, 600, 95, { contains: true });
+  const txt = findTextWithinBounds("管理", 1320, 0, 600, 95, { contains: true });
+  return drawingBoard.text(txt);
 };
 /** 存档：查找编辑关卡存档按钮 */
 export const findEditStageSaveBtn = () => {
-  return findTextWithinBounds("管理", 1220, 980, 700, 100);
+  const txt = findTextWithinBounds("管理", 1220, 980, 700, 100);
+  return drawingBoard.text(txt);
 };
 /** 存档：查找存档时间占位符 */
 const saveListViewBounds = [210, 248, 1650, 670];
 export const findSaveTimePlaceholder = () => {
   const [x, y, w, h] = saveListViewBounds;
-  return findTextWithinBounds("1970年", x, y, w, h, { contains: true });
+  return findTextWithinBounds("1970年", x, y, w, h, { contains: true, maxEditDistance: 2 });
 };
 /** 存档：查找要删除的存档位置 */
 export const findSaveToDeletePos = (keyword: string) => {
@@ -202,8 +210,7 @@ export const findSaveToDeletePos = (keyword: string) => {
 /** 存档：查找局外存档列头 */
 export const findExternalSaveColumnPos = () => {
   const txt = findTextWithinBounds("局外", 55, 190, 1810, 50, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 存档：查找删除局外存档复选框已选中状态 */
 export const findDeleteExternalSaveChecked = (colPos: number) => {
@@ -212,67 +219,79 @@ export const findDeleteExternalSaveChecked = (colPos: number) => {
     threshold: 0.8,
     use3Channels: true
   });
-  iro?.drawSelf("group_img");
-  return iro;
+  return drawingBoard.img(iro);
 };
 /** 存档：查找删除关卡存档按钮 */
 export const findDeleteStageSaveBtn = () => {
-  return findTextWithinBounds("删除所选", 1220, 980, 700, 100);
+  const txt = findTextWithinBounds("删除", 1220, 980, 700, 100, { contains: true });
+  return drawingBoard.text(txt);
 };
 
 /** 关卡：查找结算跳过按钮 */
 export const findSkipBtn = () => {
   const txt = findTextWithinBounds("跳过", 1720, 0, 200, 100, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 关卡：查找绮星盛会投票按钮 */
 export const findStarlitGalaVoteBtn = () => {
   const txt = findTextWithinBounds("投票", 1180, 650, 740, 330, { contains: false });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
-/** 关卡：查找关卡退出按钮 */
-export const findStageEscBtn = () => {
-  const img = "assets/UI_Icon_Leave.png";
-  const iro = findImageWithinBounds(img, 0, 0, 100, 100, { useMask: true, threshold: 0.8 });
-  iro?.drawSelf("group_img");
-  return iro;
+/** 关卡：检测关卡退出按钮 */
+export const findLeave = () => {
+  const list = onnxManager.uiDet.detect({ confidence: 0.75 });
+  const iro = findYoloRegion(list, item => item.name === "leave");
+  return drawingBoard.detect(iro);
+};
+/** 关卡：检测关卡加载图标 */
+export const findLoading = () => {
+  const list = onnxManager.uiDet.detect({ confidence: 0.8 });
+  const iro = findYoloRegion(list, item => {
+    return item.name === "beyond stage loading" && item.x > 1075 && item.y > 660;
+  });
+  return drawingBoard.detect(iro);
 };
 /** 关卡：查找中断挑战按钮 */
 export const findExitStageBtn = () => {
-  return findTextWithinBounds("中断挑战", 576, 324, 768, 432, { contains: true });
+  const txt = findTextWithinBounds("中断挑战", 576, 324, 768, 432, {
+    contains: true,
+    maxEditDistance: 1
+  });
+  return drawingBoard.text(txt);
 };
 
 /** 退出：查找返回提瓦特按钮 */
 export const findGotTeyvatBtn = () => {
   const txt = findTextWithinBounds("返回", 1500, 0, 300, 95, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 
 /** 纪游：查找诸界纪游按钮 */
 export const findBeyondBattlepassBtn = () => {
-  const img = "assets/UI_BtnIcon_Beyond_Battlepass.png";
-  const iro = findImageWithinBounds(img, 960, 0, 960, 80, { useMask: true, threshold: 0.75 });
-  iro?.drawSelf("group_img");
-  return iro;
+  const list = onnxManager.uiDet.detect();
+  const iro = findYoloRegion(
+    list,
+    item => item.name === "beyond battle pass" && item.x > 300 && item.y + item.height < 120
+  );
+  return drawingBoard.detect(iro);
 };
 /** 纪游：查找纪游开屏动画 */
 export const findBeyondBattlepassPopup = () => {
-  return findTextWithinBounds("奖励一览", 0, 0, 960, 1080, { contains: true });
+  const txt = findTextWithinBounds("奖励一览", 0, 0, 960, 1080, {
+    contains: true,
+    maxEditDistance: 1
+  });
+  return drawingBoard.text(txt);
 };
 /** 绮星盛会：查找奖励按钮 */
 export const findStarlitGalaRewardBtn = () => {
   const txt = findTextWithinBounds("奖励", 960, 815, 960, 265, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 绮星盛会：查找奖励对话框 */
 export const findStarlitGalaRewardDialog = () => {
   const txt = findTextWithinBounds("奖励", 810, 150, 300, 230, { contains: true });
-  txt?.drawSelf("group_text");
-  return txt;
+  return drawingBoard.text(txt);
 };
 /** 绮星盛会：查找盛会人气图标 */
 export const findFestiveFever = () => {
@@ -281,8 +300,7 @@ export const findFestiveFever = () => {
     use3Channels: true,
     threshold: 0.8
   });
-  iro?.drawSelf("group_img");
-  return iro;
+  return drawingBoard.img(iro);
 };
 /** 奖励：查找领取奖励按钮 */
 export const findFetchRewardBtn = () => {
@@ -292,6 +310,5 @@ export const findFetchRewardBtn = () => {
     use3Channels: true,
     threshold: 0.8
   });
-  iro?.drawSelf("group_img");
-  return iro;
+  return drawingBoard.img(iro);
 };

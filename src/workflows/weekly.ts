@@ -74,9 +74,7 @@ export const execWeeklyTask = async () => {
 
       /** 关卡结束，更新数据存储 */
       store.weekly.attempts += 1;
-      store.weekly.expGained += isDeleted
-        ? userConfig.expPerAttempt
-        : userConfig.expPerAttempt % 50;
+      store.weekly.expGained += isDeleted ? userConfig.expPerAttempt : 20;
       tracker.tick({ increment: 1 });
 
       /** 本周已获取经验值达到上限，跳出循环 */
@@ -90,7 +88,12 @@ export const execWeeklyTask = async () => {
       /** 发生主机异常（如：任务取消异常等），无法再继续执行 */
       if (isHostException(err)) throw err;
       /** 发生脚本流程异常，尝试退出关卡（如果在关卡中） */
-      await forceExitStage();
+      try {
+        await forceExitStage();
+      } catch (exitErr) {
+        if (isHostException(exitErr)) throw exitErr;
+        log.warn("尝试退出关卡失败: {error}", getErrorMessage(exitErr));
+      }
       /** 发生脚本流程异常，尝试返回主界面 */
       await genshin.returnMainUi();
       log.error("脚本执行出错: {error}", getErrorMessage(err));
