@@ -30,7 +30,7 @@ export const execWeeklyTask = async () => {
     return;
   }
 
-  /** 新的一周开始，重置经验值数据 */
+  /** 新的一周开始，重置每周经验值数据 */
   if (Date.now() >= store.nextWeek) {
     store.weekly = { expGained: 0, attempts: 0 };
     store.nextWeek = getNextMonday4AM().getTime();
