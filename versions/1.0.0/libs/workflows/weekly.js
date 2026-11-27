@@ -29,7 +29,7 @@ const execWeeklyTask = async () => {
     log.warn("未找到任何通关回放文件，请确保已录制回放并拷贝到 assets/playbacks 目录下");
     return;
   }
-  /** 新的一周开始，重置经验值数据 */
+  /** 新的一周开始，重置每周经验值数据 */
   if (Date.now() >= store.nextWeek) {
     store.weekly = {
       expGained: 0,

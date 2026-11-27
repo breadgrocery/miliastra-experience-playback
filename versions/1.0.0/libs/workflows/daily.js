@@ -41,7 +41,7 @@ const execDailyTask = async () => {
     }
     mappings[room] = playbacks;
   }
-  /** 新的一天开始，重置经验值数据 */
+  /** 新的一天开始，重置每日通关数据 */
   if (Date.now() >= store.nextDay) {
     store.daily = { rooms: {} };
     store.nextDay = getNextDay4AM().getTime();
